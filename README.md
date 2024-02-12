@@ -1,3 +1,1 @@
-Test read me file
-setting up intial push and pull
-test 2
+Group 11's Semester Project 
