@@ -1,0 +1,19 @@
+@startuml
+
+actor HR as "End User"
+
+rectangle Database
+
+rectangle "Census System" {
+    usecase UC4 as "Get cities data organised
+    by population"
+
+    usecase UCa as "Print a list of cities
+    in a country"
+
+    HR - UC4
+    UC4 ..> UCa : include
+    UC4 - Database
+}
+
+@enduml
