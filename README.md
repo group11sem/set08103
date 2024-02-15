@@ -11,8 +11,16 @@ Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github
 
 Name | Matriculation No. | Contribution
 ---|---|---
-Patric Mountcastle | 123456 | 34%
+Patric Mountcastle | 40689401 | 34%
 Fergus Reid | 40534638 | 33%
 Joao Tome | 123456 | 33%
 Ryan Souness | 123456 | 0%
 Iain Mackenzie-Cameron | 123456 | 0%
+
+
+Rule Number | Code of Conduct
+---|---|---
+1 | Meet every week for half an hour and discuss tasks for the week
+2 | Communicate using Discord
+3 | Inform other group mates of meeting cancellations at least one hour in advance
+
