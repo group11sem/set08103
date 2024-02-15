@@ -20,7 +20,7 @@ We know the district.  Database contains current city population data.
 
 ### Success End Condition
 
-A report is available for HR to provide to finance.
+A report is available for user.
 
 ### Failed End Condition
 
