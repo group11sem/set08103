@@ -1,0 +1,18 @@
+@startuml
+
+actor user as "Organization User"
+
+rectangle Database
+
+rectangle "Census System" {
+    usecase UC4 as "Get all countries in the world
+    and their population"
+
+    usecase UCa as "Print list of all countries in the world"
+
+    user - UC4
+    UC4 ..> UCa : largest to smallest
+    UC4 - Database
+}
+
+@enduml

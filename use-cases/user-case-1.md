@@ -32,19 +32,17 @@ Organization User
 
 ### Trigger
 
-A request for finance information is sent to HR.
+Someone wants to know census data on every country in the world.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Finance request salary information for a given role.
-2. HR advisor captures name of the role to get salary information for.
-3. HR advisor extracts current salary information of all employees of the given role.
-4. HR advisor provides report to finance.
+1. Organization user wants to generate list of all the countries in the world by population
+2. User extracts a list of all the countries in the world and their populations in order from largest to smallest population
 
 ## EXTENSIONS
 
-3. **Role does not exist**:
-    1. HR advisor informs finance no role exists.
+3. **Database contain all countries**:
+    1. Database might not be up to date if a new country is created. 
 
 ## SUB-VARIATIONS
 
@@ -52,4 +50,4 @@ None.
 
 ## SCHEDULE
 
-**DUE DATE**: Release 1.0
+**DUE DATE**: Release 0.1.0.5
