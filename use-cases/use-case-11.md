@@ -8,7 +8,7 @@ As an *User* I want *Produce a Report on all the cities in a distric sorted by l
 
 ### Scope
 
-All cities in any district on earth
+Organisation.
 
 ### Level
 
