@@ -19,7 +19,7 @@ Iain Mackenzie-Cameron | 123456 | 0%
 
 
 Rule Number | Code of Conduct
----|---|---
+---|---
 1 | Meet every week for half an hour and discuss tasks for the week
 2 | Communicate using Discord
 3 | Inform other group mates of meeting cancellations at least one hour in advance
