@@ -12,6 +12,11 @@ public class Main
         // Connect to database
         a.connect();
 
+        //Gets the population of given country
+        country area = a.getCountryPop("United States");
+
+        //Displays the information of given country
+        a.displayCountry(area);
         // Disconnect from database
         a.disconnect();
     }
@@ -45,7 +50,7 @@ public class Main
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
             }
@@ -77,6 +82,49 @@ public class Main
             {
                 System.out.println("Error closing connection to database");
             }
+        }
+    }
+
+    public country getCountryPop(String name)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM country "
+                            + "WHERE name = '" + name + "'";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                country area = new country();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                return area;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return null;
+        }
+    }
+
+    public void displayCountry(country area)
+    {
+        if (area != null)
+        {
+            System.out.println(
+                    "Name: " + area.name + "\n" +
+                            "Population: " + area.population);
         }
     }
 }
