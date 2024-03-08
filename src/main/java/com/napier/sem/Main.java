@@ -11,12 +11,18 @@ public class Main
 
         // Connect to database
         a.connect();
-
+        System.out.println("Displaying a Country's Population: ");
         //Gets the population of given country
         country area = a.getCountryPop("United States");
 
         //Displays the information of given country
         a.displayCountry(area);
+
+        System.out.println("Displaying a city's Population: ");
+
+        city place = a.getCityPop("Edinburgh");
+
+        a.displayCity(place);
         // Disconnect from database
         a.disconnect();
     }
@@ -119,6 +125,49 @@ public class Main
     }
 
     public void displayCountry(country area)
+    {
+        if (area != null)
+        {
+            System.out.println(
+                    "Name: " + area.name + "\n" +
+                            "Population: " + area.population);
+        }
+    }
+
+    public city getCityPop(String name)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM city "
+                            + "WHERE name = '" + name + "'";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            if (rset.next())
+            {
+                city area = new city();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                return area;
+            }
+            else
+                return null;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get employee details");
+            return null;
+        }
+    }
+
+    public void displayCity(city area)
     {
         if (area != null)
         {
