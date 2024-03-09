@@ -36,6 +36,14 @@ public class Main
 
         a.displayDistrictPop(cities, "Scotland");
 
+        System.out.println("Displaying all countries in the world ordered by largest to smallest population: ");
+
+        ArrayList<country> countries = a.getALlCountriesPopInWorld();
+
+        for(int i = 0; i < countries.size(); i++){
+            System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
+        }
+
         // Disconnect from database
         a.disconnect();
     }
@@ -224,6 +232,39 @@ public class Main
                 dist.population += cities.get(i).population;
             }
             System.out.println("District Name: " + dist.name + "\n" + "Population: " + dist.population);
+        }
+    }
+
+    public ArrayList<country> getALlCountriesPopInWorld()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM country "
+                            + "ORDER BY population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<country> countries = new ArrayList<country>();
+            while (rset.next())
+            {
+                country area = new country();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                countries.add(area);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities within a district");
+            return null;
         }
     }
 }
