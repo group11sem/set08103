@@ -40,9 +40,7 @@ public class Main
 
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
-        for(int i = 0; i < countries.size(); i++){
-            System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
-        }
+        a.displayWorldPopByCountry(countries);
 
         // Disconnect from database
         a.disconnect();
@@ -265,6 +263,17 @@ public class Main
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities within a district");
             return null;
+        }
+    }
+
+    public void displayWorldPopByCountry(ArrayList<country> countries)
+    {
+        if (countries != null)
+        {
+            for(int i = 0; i < countries.size(); i++){
+                System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
+            }
+
         }
     }
 }
