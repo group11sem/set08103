@@ -32,9 +32,10 @@ public class Main
         //Displaying all cities in a district and their population
         ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
 
-        for(int i = 0; i < cities.size();i++){
-        System.out.println("Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
-    }
+        System.out.println("Displaying a district's Population: ");
+
+        a.displayDistrictPop(cities, "Scotland");
+
         // Disconnect from database
         a.disconnect();
     }
@@ -211,6 +212,18 @@ public class Main
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities within a district");
             return null;
+        }
+    }
+    public void displayDistrictPop(ArrayList<city> cities, String name)
+    {
+        if (cities != null)
+        {
+            district dist = new district();
+            dist.name = name;
+            for(int i = 0; i < cities.size();i++){
+                dist.population += cities.get(i).population;
+            }
+            System.out.println("District Name: " + dist.name + "\n" + "Population: " + dist.population);
         }
     }
 }
