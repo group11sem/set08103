@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Main
 {
@@ -27,6 +28,13 @@ public class Main
         city place = a.getCityPop("Edinburgh");
 
         a.displayCity(place);
+
+        //Displaying all cities in a district and their population
+        ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
+
+        for(int i = 0; i < cities.size();i++){
+        System.out.println("Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+    }
         // Disconnect from database
         a.disconnect();
     }
@@ -170,6 +178,39 @@ public class Main
             System.out.println(
                     "Name: " + area.name + "\n" +
                             "Population: " + area.population);
+        }
+    }
+
+    public ArrayList<city> getALlCitiesPopInDistrict(String name)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM city "
+                            + "WHERE district = '" + name + "'";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city area = new city();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                cities.add(area);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities within a district");
+            return null;
         }
     }
 }
