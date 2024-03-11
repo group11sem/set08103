@@ -276,4 +276,37 @@ public class Main
 
         }
     }
+
+    public ArrayList<city> getALlCitiesPopInWorld()
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM city "
+                            + "ORDER BY population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new employee if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city area = new city();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                cities.add(area);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities within a district");
+            return null;
+        }
+    }
 }
