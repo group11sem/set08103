@@ -331,10 +331,14 @@ public class Main
     {
         if (cities != null)
         {
-            for(int i = 0; i < n; i++){
-                System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+            if(cities.size() >= n) {
+                for (int i = 0; i < n; i++) {
+                    System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+                }
             }
-
+            else{
+                System.out.println("Given Integer was too large");
+            }
         }
     }
 }
