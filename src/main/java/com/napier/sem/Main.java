@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main
 {
@@ -42,7 +43,17 @@ public class Main
 
         a.displayWorldPopByCountry(countries);
 
+        System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
         // Disconnect from database
+
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("What number of largest cities in the world would you like to view:");
+
+        int n_city_world = scan.nextInt();
+
+        System.out.println(n_city_world);
+
         a.disconnect();
     }
     /**
