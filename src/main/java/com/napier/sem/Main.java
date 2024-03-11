@@ -49,8 +49,9 @@ public class Main
         Scanner scan = new Scanner(System.in);
 
         System.out.println("What number of largest cities in the world would you like to view:");
+        int n_city_world = 2;
 
-        int n_city_world = scan.nextInt();
+        n_city_world = scan.nextInt();
 
         System.out.println(n_city_world);
 
