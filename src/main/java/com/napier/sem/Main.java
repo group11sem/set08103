@@ -55,6 +55,10 @@ public class Main
 
         System.out.println(n_city_world);
 
+        cities = a.getALlCitiesPopInWorld();
+
+        a.displayNCitiesInWorld(cities, n_city_world);
+
         a.disconnect();
     }
     /**
@@ -319,6 +323,17 @@ public class Main
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities within a district");
             return null;
+        }
+    }
+
+    public void displayNCitiesInWorld(ArrayList<city> cities, int n)
+    {
+        if (cities != null)
+        {
+            for(int i = 0; i < n; i++){
+                System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+            }
+
         }
     }
 }
