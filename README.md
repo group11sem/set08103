@@ -29,3 +29,11 @@ Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github
 | 7           | Be kind and respectful to one another|
 | 8           | Bring up issues you have at the team meetings to ensure constructive feedbackS|
 
+# Reports to Complete for Checkpoint 3
+| Name                | Issues completing                 |
+|---------------------|-----------------------------------|
+| Patrick Mountcastle | #2, #3, #11, #17, #18, #19 , #20  |
+| Fergus Reid         | #8, #9, #13,#14, #15, #16, #10    |
+| Jao Tome            | #23, #24, #25, #26, #27, #28, #22 |      
+| Whoever can do      | #21, #32, #33                     | 
+
