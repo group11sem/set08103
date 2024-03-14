@@ -10,12 +10,10 @@ Group 11's Semester Project
 Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/group11sem/set08103/main.yml?branch=develop)
 
 | Name                   | Matriculation No. | Review 1 | Review 2 |
-|------------------------|---|---|----------|
-| Patric Mountcastle     | 40689401 | 34% | 33.4%    |
-| Fergus Reid            | 40534638 | 33% | 33.3%    |
-| Joao Tome              | 123456 | 33% | 33.3%    |
-| Ryan Souness           | 123456 | 0% | 0%       |
-| Iain Mackenzie-Cameron | 123456 | 0% | 0%       |
+|------------------------|-------------------|---|----------|
+| Patric Mountcastle     | 40689401          | 34% | 33.4%    |
+| Fergus Reid            | 40534638          | 33% | 33.3%    |
+| Joao Tome              | 40658588          | 33% | 33.3%    |
 
 
 | Rule Number | Code of Conduct|
