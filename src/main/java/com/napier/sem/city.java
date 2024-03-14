@@ -6,6 +6,10 @@ public class city {
      */
     public String name;
 
+    public String countryCode;
+
+    public String district;
+
     /**
      * City population
      */

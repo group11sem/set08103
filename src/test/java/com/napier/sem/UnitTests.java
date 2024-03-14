@@ -218,4 +218,63 @@ public class UnitTests
         cities.add(area);
         app.displayNCitiesInWorld(cities, 5);
     }
+
+    @Test
+    void displayCountriesNull()
+    {
+        app.displayCountries(null);
+    }
+
+    @Test
+    void displayCountriesNullMember()
+    {
+        ArrayList<country> countries = new ArrayList<country>();
+        countries.add(null);
+        app.displayCountries(countries);
+    }
+
+    @Test
+    void displayCountriesEmpty()
+    {
+        ArrayList<country> countries = new ArrayList<country>();
+        app.displayCountries(countries);
+    }
+
+    @Test
+    void displayCountriesEmptyMember()
+    {
+        ArrayList<country> countries = new ArrayList<country>();
+        country c = new country();
+        countries.add(c);
+        app.displayCountries(countries);
+    }
+
+    @Test
+    void displayCountriesNormal()
+    {
+        ArrayList<country> countries = new ArrayList<country>();
+        country c = new country();
+        c.code = "GBR";
+        c.name = "United Kingdom";
+        c.region = "Western Europe";
+        c.population = 9999;
+        c.capital = 1234;
+        countries.add(c);
+        app.displayCountries(countries);
+    }
+
+    @Test
+    void displayCountriesNameNull()
+    {
+        ArrayList<country> countries = new ArrayList<country>();
+        country c = new country();
+        c.code = "GBR";
+        c.name = null;
+        c.region = "Western Europe";
+        c.population = 9999;
+        c.capital = 1234;
+        countries.add(c);
+        app.displayCountries(countries);
+    }
+
 }

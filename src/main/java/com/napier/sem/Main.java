@@ -61,9 +61,22 @@ public class Main
 
 
         //FERGUS WORK, ISSUES #4 TO #?
-        System.out.println("What number of largest countries in the world would you like to view:");
 
-        displayCountries(a.getCountries("", "LIMIT 3 "));
+        //#4
+        a.displayCountries(a.getCountries("", "LIMIT 3 "));
+
+        //#5
+        a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 3 "));
+
+        //#6
+        a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
+
+        //#7
+        a.displayCities(a.getCities("", ""));
+
+        //#8
+        //displayCities(a.getCities("WHERE continent='Europe'", ""));
+
 
         a.disconnect();
     }
@@ -348,8 +361,10 @@ public class Main
     }
 
 
-    public ArrayList<country> getCountries(String aStatement, String bStatement)
+    public ArrayList<country> getCountries(String whereStatement, String limitStatement)
     {
+        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
+
         try
         {
             // Create an SQL statement
@@ -359,9 +374,9 @@ public class Main
             String strSelect =
                     "SELECT * "
                             + "FROM country "
+                            + whereStatement
                             + "ORDER BY population DESC "
-                            + aStatement
-                            + bStatement;
+                            + limitStatement;
 
             System.out.println(strSelect);
             // Execute SQL statement
@@ -375,17 +390,8 @@ public class Main
                 c.code = rset.getString("code");
                 c.name = rset.getString("name");
                 c.region = rset.getString("region");
-                c.surfaceArea = rset.getFloat("surfacearea");
-                c.independenceYear = rset.getShort("indepyear");
                 c.population = rset.getInt("population");
-                c.lifeExpectancy = rset.getFloat("lifeexpectancy");
-                c.gnp = rset.getFloat("gnp");
-                c.gnpOld = rset.getFloat("gnpold");
-                c.localName = rset.getString("localname");
-                c.governmentForm = rset.getString("governmentform");
-                c.headOfState = rset.getString("headofstate");
                 c.capital = rset.getInt("capital");
-                c.code2 = rset.getString("code2");
                 countries.add(c);
             }
             return countries;
@@ -398,11 +404,73 @@ public class Main
         }
     }
 
-    public static void displayCountries(ArrayList<country> countries)
+    public void displayCountries(ArrayList<country> countries)
     {
-        for (country country : countries) {
+        if(countries == null) {System.out.println("countries arraylist is null"); return;}
+        if(countries.isEmpty()) {System.out.println("countries arraylist is empty"); return;}
+
+        for (country country : countries)
+        {
+            if(country == null) {System.out.println("country is null"); return;}
 
             System.out.println("Name: " + country.name + " Population: " + country.population);
+        }
+    }
+
+
+
+    public ArrayList<city> getCities(String whereStatement, String limitStatement)
+    {
+        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
+
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT * "
+                            + "FROM city "
+                            + whereStatement
+                            + "ORDER BY population DESC "
+                            + limitStatement;
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city c = new city();
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    }
+
+    public void displayCities(ArrayList<city> cities)
+    {
+        if(cities == null) {System.out.println("countries arraylist is null"); return;}
+        if(cities.isEmpty()) {System.out.println("countries arraylist is empty"); return;}
+
+        for (city city : cities)
+        {
+            if(city == null) {System.out.println("country is null"); return;}
+
+            System.out.println("Name: " + city.name + " Population: " + city.population);
         }
     }
 }
