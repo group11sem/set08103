@@ -13,7 +13,7 @@ public class Main
 
         // Connect to database
         if(args.length < 1){
-            a.connect("localhost:33060", 30000);
+            a.connect("localhost:33060", 5000);
         }else{
             a.connect(args[0], Integer.parseInt(args[1]));
         }
@@ -59,6 +59,11 @@ public class Main
 
         a.displayNCitiesInWorld(cities, n_city_world);
 
+
+        //FERGUS WORK, ISSUES #4 TO #?
+        System.out.println("What number of largest countries in the world would you like to view:");
+
+        displayCountries(a.getCountries("", "LIMIT 3 "));
 
         a.disconnect();
     }
@@ -132,7 +137,7 @@ public class Main
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new country if valid.
             // Check one is returned
             if (rset.next())
             {
@@ -147,7 +152,7 @@ public class Main
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
+            System.out.println("Failed to get country details");
             return null;
         }
     }
@@ -175,7 +180,7 @@ public class Main
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new city if valid.
             // Check one is returned
             if (rset.next())
             {
@@ -190,7 +195,7 @@ public class Main
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get employee details");
+            System.out.println("Failed to get city details");
             return null;
         }
     }
@@ -218,7 +223,7 @@ public class Main
                             + "WHERE district = '" + name + "'";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new city if valid.
             // Check one is returned
             ArrayList<city> cities = new ArrayList<city>();
             while (rset.next())
@@ -263,7 +268,7 @@ public class Main
                             + "ORDER BY population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new city if valid.
             // Check one is returned
             ArrayList<country> countries = new ArrayList<country>();
             while (rset.next())
@@ -307,7 +312,7 @@ public class Main
                             + "ORDER BY population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
+            // Return new city if valid.
             // Check one is returned
             ArrayList<city> cities = new ArrayList<city>();
             while (rset.next())
@@ -339,6 +344,65 @@ public class Main
             else{
                 System.out.println("Given Integer was too large");
             }
+        }
+    }
+
+
+    public ArrayList<country> getCountries(String aStatement, String bStatement)
+    {
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT * "
+                            + "FROM country "
+                            + "ORDER BY population DESC "
+                            + aStatement
+                            + bStatement;
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<country> countries = new ArrayList<country>();
+            while (rset.next())
+            {
+                country c = new country();
+                c.code = rset.getString("code");
+                c.name = rset.getString("name");
+                c.region = rset.getString("region");
+                c.surfaceArea = rset.getFloat("surfacearea");
+                c.independenceYear = rset.getShort("indepyear");
+                c.population = rset.getInt("population");
+                c.lifeExpectancy = rset.getFloat("lifeexpectancy");
+                c.gnp = rset.getFloat("gnp");
+                c.gnpOld = rset.getFloat("gnpold");
+                c.localName = rset.getString("localname");
+                c.governmentForm = rset.getString("governmentform");
+                c.headOfState = rset.getString("headofstate");
+                c.capital = rset.getInt("capital");
+                c.code2 = rset.getString("code2");
+                countries.add(c);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get countries");
+            return null;
+        }
+    }
+
+    public static void displayCountries(ArrayList<country> countries)
+    {
+        for (country country : countries) {
+
+            System.out.println("Name: " + country.name + " Population: " + country.population);
         }
     }
 }

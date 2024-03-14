@@ -10,5 +10,4 @@ public class city {
      * City population
      */
     public int population;
-
 }
