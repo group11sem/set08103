@@ -17,65 +17,65 @@ public class Main
         }else{
             a.connect(args[0], Integer.parseInt(args[1]));
         }
-        System.out.println("Displaying a Country's Population: ");
+        //System.out.println("Displaying a Country's Population: ");
         //Gets the population of given country
         country area = a.getCountryPop("United States");
 
         //Displays the information of given country
-        a.displayCountry(area);
+        //a.displayCountry(area);
 
-        System.out.println("Displaying a city's Population: ");
+        //System.out.println("Displaying a city's Population: ");
 
         city place = a.getCityPop("Edinburgh");
 
-        a.displayCity(place);
+        //a.displayCity(place);
 
         //Displaying all cities in a district and their population
         ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
 
-        System.out.println("Displaying a district's Population: ");
+        //System.out.println("Displaying a district's Population: ");
 
-        a.displayDistrictPop(cities, "Scotland");
+        //a.displayDistrictPop(cities, "Scotland");
 
-        System.out.println("Displaying all countries in the world ordered by largest to smallest population: ");
+        //System.out.println("Displaying all countries in the world ordered by largest to smallest population: ");
 
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
-        a.displayWorldPopByCountry(countries);
+        //a.displayWorldPopByCountry(countries);
 
-        System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
+        //System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
         // Disconnect from database
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("What number of largest cities in the world would you like to view:");
+        //System.out.println("What number of largest cities in the world would you like to view:");
         int n_city_world = 2;
 
         //n_city_world = scan.nextInt();
 
-        System.out.println(n_city_world);
+        //System.out.println(n_city_world);
 
         cities = a.getALlCitiesPopInWorld();
 
-        a.displayNCitiesInWorld(cities, n_city_world);
+        //a.displayNCitiesInWorld(cities, n_city_world);
 
 
         //FERGUS WORK, ISSUES #4 TO #?
 
         //#4
-        a.displayCountries(a.getCountries("", "LIMIT 3 "));
+        //a.displayCountries(a.getCountries("", "LIMIT 3 "));
 
         //#5
-        a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 3 "));
+        //a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 3 "));
 
         //#6
-        a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
+        //a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
 
         //#7
-        a.displayCities(a.getCities("", ""));
+        //a.displayCities(a.getCities("", ""));
 
         //#8
-        //displayCities(a.getCities("WHERE continent='Europe'", ""));
+        a.displayCities(a.getCities("WHERE country.Continent='Europe' ", "LIMIT 3 ", "INNER JOIN ON city.CountryCode = country.Code "));
 
 
         a.disconnect();
@@ -423,42 +423,31 @@ public class Main
     {
         if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
 
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
+        String strSelect =
+                "SELECT * "
+                        + "FROM city "
+                        + whereStatement
+                        + "ORDER BY population DESC "
+                        + limitStatement;
 
-            String strSelect =
-                    "SELECT * "
-                            + "FROM city "
-                            + whereStatement
-                            + "ORDER BY population DESC "
-                            + limitStatement;
+        ResultSet rset = executeSQL(strSelect);
+        return parseCity(rset);
+    }
 
-            System.out.println(strSelect);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<city> cities = new ArrayList<city>();
-            while (rset.next())
-            {
-                city c = new city();
-                c.name = rset.getString("name");
-                c.countryCode = rset.getString("countrycode");
-                c.district = rset.getString("district");
-                c.population = rset.getInt("population");
-                cities.add(c);
-            }
-            return cities;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get cities");
-            return null;
-        }
+    public ArrayList<city> getCities(String whereStatement, String limitStatement, String joinStatement)
+    {
+        if(whereStatement == null || limitStatement == null || joinStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
+
+        String strSelect =
+                "SELECT * "
+                        + "FROM city "
+                        + joinStatement
+                        + whereStatement
+                        + "ORDER BY population DESC "
+                        + limitStatement;
+
+        ResultSet rset = executeSQL(strSelect);
+        return parseCity(rset);
     }
 
     public void displayCities(ArrayList<city> cities)
@@ -471,6 +460,81 @@ public class Main
             if(city == null) {System.out.println("country is null"); return;}
 
             System.out.println("Name: " + city.name + " Population: " + city.population);
+        }
+    }
+
+
+    public ResultSet executeSQL(String statement)
+    {
+        if(statement == null){System.out.println("Part of your statement is null [executeSQl]"); return null;}
+
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            System.out.println(statement);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(statement);
+            // Return new country if valid.
+            // Check one is returned
+            if(rset == null){System.out.println("NO RESULTS FROM STATEMENT [executeSQl]");}
+            return rset;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get statements [executeSQl]");
+            return null;
+        }
+    }
+
+    public void printSQL(ResultSet rset)
+    {
+        try {
+            ResultSetMetaData rmet = rset.getMetaData();
+            int columnCount = rmet.getColumnCount();
+            for(int i = 1; i <= columnCount; i++)
+            {
+                System.out.print(rmet.getColumnName(i) + "    ");
+            }
+            System.out.println();
+
+            while (rset.next())
+            {
+                for(int i = 1; i <= columnCount; i++)
+                {
+                    System.out.print(rset.getString(i));
+                }
+            }
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to print SQL output [printSQL]");
+        }
+
+    }
+
+    public ArrayList<city> parseCity (ResultSet rset)
+    {
+        try {
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next()) {
+                city c = new city();
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities [parseCity]");
+            return null;
         }
     }
 }
