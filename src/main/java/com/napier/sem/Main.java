@@ -20,6 +20,8 @@ public class Main
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
+
+        /**
         //Gets the population of given country
         country area = a.getCountryPop("United States");
 
@@ -82,6 +84,10 @@ public class Main
 
 
         a.displayCountries(a.getCountriesInContinent("Europe"));
+        **/
+
+        a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
+
 
         a.disconnect();
     }
@@ -493,6 +499,38 @@ public class Main
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new city if valid.
+            // Check one is returned
+            ArrayList<country> countries = new ArrayList<country>();
+            while (rset.next())
+            {
+                country area = new country();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                countries.add(area);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities within a district");
+            return null;
+        }
+    }
+
+    public ArrayList<country> getCountriesInRegion(String region){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM country "
+                            + "WHERE region = '" + region + "'"
+                            + "ORDER BY population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
             // Check one is returned
             ArrayList<country> countries = new ArrayList<country>();
             while (rset.next())
