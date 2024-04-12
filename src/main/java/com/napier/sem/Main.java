@@ -87,8 +87,10 @@ public class Main
         **/
 
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
-
-
+        System.out.println("\n Displaying Scotland Cities:");
+        a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
+        System.out.println("\n Displaying Captial Cities in the World:");
+        a.displayCities(a.getCapitalsInWorld());
         a.disconnect();
     }
     /**
@@ -546,6 +548,42 @@ public class Main
         {
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities within a district");
+            return null;
+        }
+    }
+
+    public ArrayList<city> getCapitalsInWorld(){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT city.name, city.population "
+                            + "FROM city, country "
+                            + "WHERE city.id = country.capital "
+                            + "ORDER BY population DESC ";
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city c = new city();
+                c.name = rset.getString("city.name");
+                c.population = rset.getInt("city.population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
             return null;
         }
     }
