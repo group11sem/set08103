@@ -18,6 +18,8 @@ public class Main
             a.connect(args[0], Integer.parseInt(args[1]));
         }
         System.out.println("Displaying a Country's Population: ");
+
+        //Commeneted Out to perform more testing with less clutter.
         //Gets the population of given country
         country area = a.getCountryPop("United States");
 
@@ -77,6 +79,9 @@ public class Main
         //#8
         //displayCities(a.getCities("WHERE continent='Europe'", ""));
 
+
+
+        a.displayCountries(a.getCountriesInContinent("Europe"));
 
         a.disconnect();
     }
@@ -471,6 +476,39 @@ public class Main
             if(city == null) {System.out.println("country is null"); return;}
 
             System.out.println("Name: " + city.name + " Population: " + city.population);
+        }
+    }
+
+    public ArrayList<country> getCountriesInContinent(String continent){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT name, population "
+                            + "FROM country "
+                            + "WHERE continent = '" + continent + "'"
+                            + "ORDER BY population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new city if valid.
+            // Check one is returned
+            ArrayList<country> countries = new ArrayList<country>();
+            while (rset.next())
+            {
+                country area = new country();
+                area.name = rset.getString("name");
+                area.population = rset.getInt("population");
+                countries.add(area);
+            }
+            return countries;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities within a district");
+            return null;
         }
     }
 }
