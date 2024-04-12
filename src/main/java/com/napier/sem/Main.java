@@ -13,7 +13,7 @@ public class Main
 
         // Connect to database
         if(args.length < 1){
-            a.connect("localhost:33060", 5000);
+            a.connect("localhost:33060", 1000);
         }else{
             a.connect(args[0], Integer.parseInt(args[1]));
         }
@@ -46,7 +46,7 @@ public class Main
         //System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
         // Disconnect from database
 
-        Scanner scan = new Scanner(System.in);
+        //Scanner scan = new Scanner(System.in);
 
         //System.out.println("What number of largest cities in the world would you like to view:");
         int n_city_world = 2;
@@ -75,7 +75,42 @@ public class Main
         //a.displayCities(a.getCities("", ""));
 
         //#8
-        a.displayCities(a.getCities("WHERE country.Continent='Europe' ", "LIMIT 3 ", "INNER JOIN ON city.CountryCode = country.Code "));
+        //a.displayCities(a.getCities("WHERE country.continent='Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#9
+        //a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#10
+        //a.displayCities(a.getCities("WHERE country.code='GBR' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+
+
+
+
+
+
+
+
+
+
+
+        int userInput = 99; //Default user input
+        String inputString = "Limit " + userInput + " ";
+
+        //#13
+
+        userInput = 3;
+        inputString = "Limit " + userInput + " ";
+        //a.displayCities(a.getCities("WHERE country.continent='Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#14
+        userInput = 5;
+        inputString = "Limit " + userInput + " ";
+        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        a.displayCities(a.getCities());
+
+
+
 
 
         a.disconnect();
@@ -418,32 +453,31 @@ public class Main
     }
 
 
+    public ArrayList<city> getCities()
+    {
+        return getCities("");
+    }
+
+    public ArrayList<city> getCities(String whereStatement)
+    {
+        return getCities(whereStatement, "");
+    }
 
     public ArrayList<city> getCities(String whereStatement, String limitStatement)
     {
-        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
-
-        String strSelect =
-                "SELECT * "
-                        + "FROM city "
-                        + whereStatement
-                        + "ORDER BY population DESC "
-                        + limitStatement;
-
-        ResultSet rset = executeSQL(strSelect);
-        return parseCity(rset);
+        return getCities(whereStatement, limitStatement, "");
     }
 
     public ArrayList<city> getCities(String whereStatement, String limitStatement, String joinStatement)
     {
-        if(whereStatement == null || limitStatement == null || joinStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
+        if(whereStatement == null || limitStatement == null || joinStatement == null){System.out.println("Part of your statement is null, use an empty string instead [getCities]"); return null;}
 
         String strSelect =
-                "SELECT * "
+                "SELECT city.name, city.countrycode, city.district, city.population "
                         + "FROM city "
                         + joinStatement
                         + whereStatement
-                        + "ORDER BY population DESC "
+                        + "ORDER BY city.population DESC "
                         + limitStatement;
 
         ResultSet rset = executeSQL(strSelect);
@@ -452,12 +486,12 @@ public class Main
 
     public void displayCities(ArrayList<city> cities)
     {
-        if(cities == null) {System.out.println("countries arraylist is null"); return;}
-        if(cities.isEmpty()) {System.out.println("countries arraylist is empty"); return;}
+        if(cities == null) {System.out.println("countries arraylist is null [displayCities]"); return;}
+        if(cities.isEmpty()) {System.out.println("countries arraylist is empty [displayCities]"); return;}
 
         for (city city : cities)
         {
-            if(city == null) {System.out.println("country is null"); return;}
+            if(city == null) {System.out.println("country is null [displayCities]"); return;}
 
             System.out.println("Name: " + city.name + " Population: " + city.population);
         }
@@ -505,8 +539,9 @@ public class Main
                 {
                     System.out.print(rset.getString(i));
                 }
+                System.out.println();
             }
-
+        System.out.println("---");
         }
         catch (Exception e)
         {
