@@ -21,7 +21,7 @@ public class Main
 
         //Commeneted Out to perform more testing with less clutter.
 
-        /**
+
         //Gets the population of given country
         country area = a.getCountryPop("United States");
 
@@ -84,7 +84,7 @@ public class Main
 
 
         a.displayCountries(a.getCountriesInContinent("Europe"));
-        **/
+
 
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
         System.out.println("\n Displaying Scotland Cities:");
@@ -95,6 +95,8 @@ public class Main
         a.displayCities(a.getCapitalsInContinent("Europe"));
         System.out.println("\n Displaying Captial Cities in a region:");
         a.displayCities(a.getCapitalsInRegion("Western Europe"));
+        System.out.println("\n Displaying Top N Captial Cities in the world:");
+        a.displayNCitiesInWorld(a.getCapitalsInWorld(), 5);
         a.disconnect();
     }
     /**
