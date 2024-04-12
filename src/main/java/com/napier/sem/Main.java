@@ -91,6 +91,8 @@ public class Main
         a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
         System.out.println("\n Displaying Captial Cities in the World:");
         a.displayCities(a.getCapitalsInWorld());
+        System.out.println("\n Displaying Captial Cities in a continent:");
+        a.displayCities(a.getCapitalsInContinent("Europe"));
         a.disconnect();
     }
     /**
@@ -563,6 +565,43 @@ public class Main
                     "SELECT city.name, city.population "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital "
+                            + "ORDER BY population DESC ";
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city c = new city();
+                c.name = rset.getString("city.name");
+                c.population = rset.getInt("city.population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    }
+
+    public ArrayList<city> getCapitalsInContinent(String continent){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT city.name, city.population "
+                            + "FROM city, country "
+                            + "WHERE city.id = country.capital " +
+                            "AND country.continent = '" + continent + "' "
                             + "ORDER BY population DESC ";
 
             System.out.println(strSelect);
