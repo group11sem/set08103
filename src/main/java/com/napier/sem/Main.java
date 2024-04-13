@@ -103,13 +103,19 @@ public class Main
         //a.displayCities(a.getCities("WHERE country.continent='Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
 
         //#14
+        userInput = 4;
+        inputString = "Limit " + userInput + " ";
+        //a.displayCities(a.getCities("WHERE country.region='Western Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#15
         userInput = 5;
         inputString = "Limit " + userInput + " ";
-        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+        a.displayCities(a.getCities("WHERE country.code='GBR' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
 
-        a.displayCities(a.getCities());
-
-
+        //#16
+        userInput = 6;
+        inputString = "Limit " + userInput + " ";
+        a.displayCities(a.getCities("WHERE city.district='England' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
 
 
 
