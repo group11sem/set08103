@@ -13,13 +13,13 @@ body:
   - type: dropdown
     id: version
     attributes:
-        label: Database
-        description: What database were you accessing?
-        options:
-          - World
-        default: 0
+      label: Database
+      description: What database were you accessing?
+      options:
+        - World
+      default: 0
     validations:
-        required: true
+      required: true
   - type: input
     id: contact
     attributes:
