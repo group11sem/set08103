@@ -18,6 +18,18 @@ body:
       placeholder: ex. email@example.com
     validations:
       required: false
+  - type: dropdown
+    id: version
+    attributes:
+      label: Issue?
+      description: What problem did you occur?
+      options:
+        - Error
+        - Incorrect information
+        - Other
+      default: 0
+    validations:
+      required: true
   - type: textarea
     id: what-happened
     attributes:
