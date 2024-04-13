@@ -81,6 +81,48 @@ public class Main
         //#8
         //displayCities(a.getCities("WHERE continent='Europe'", ""));
 
+        //#9
+        //a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#10
+        //a.displayCities(a.getCities("WHERE country.code='GBR' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+
+
+
+
+
+
+
+
+
+
+
+        int userInput = 99; //Default user input
+        String inputString = "Limit " + userInput + " ";
+
+        //#13
+
+        userInput = 3;
+        inputString = "Limit " + userInput + " ";
+        //a.displayCities(a.getCities("WHERE country.continent='Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#14
+        userInput = 4;
+        inputString = "Limit " + userInput + " ";
+        //a.displayCities(a.getCities("WHERE country.region='Western Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#15
+        userInput = 5;
+        inputString = "Limit " + userInput + " ";
+        a.displayCities(a.getCities("WHERE country.code='GBR' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        //#16
+        userInput = 6;
+        inputString = "Limit " + userInput + " ";
+        a.displayCities(a.getCities("WHERE city.district='England' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+
+
 
 
         a.displayCountries(a.getCountriesInContinent("Europe"));
