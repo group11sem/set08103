@@ -1,10 +1,10 @@
 name: Bug Report
 description: File a bug report.
 title: "[Bug]: "
-labels: ["bug", "triage"]
-projects: ["octo-org/1", "octo-org/44"]
+labels: ["bug"]
+projects: ["group11sem/set08103"]
 assignees:
-  - octocat
+  - group11
 body:
   - type: dropdown
     id: database
