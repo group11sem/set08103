@@ -20,4 +20,9 @@ public class IntegrationTests
 
     }
 
+    @Test
+    void simpleTest(){
+        assertEquals(5,5);
+    }
+
 }
