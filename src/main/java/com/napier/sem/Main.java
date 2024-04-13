@@ -437,48 +437,48 @@ public class Main
     }
 
 
-
-    public ArrayList<city> getCities(String whereStatement, String limitStatement)
-    {
-        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
-
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-
-            String strSelect =
-                    "SELECT * "
-                            + "FROM city "
-                            + whereStatement
-                            + "ORDER BY population DESC "
-                            + limitStatement;
-
-            System.out.println(strSelect);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
-            ArrayList<city> cities = new ArrayList<city>();
-            while (rset.next())
-            {
-                city c = new city();
-                c.name = rset.getString("name");
-                c.countryCode = rset.getString("countrycode");
-                c.district = rset.getString("district");
-                c.population = rset.getInt("population");
-                cities.add(c);
-            }
-            return cities;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get cities");
-            return null;
-        }
-    }
+//
+//    public ArrayList<city> getCities(String whereStatement, String limitStatement)
+//    {
+//        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
+//
+//        try
+//        {
+//            // Create an SQL statement
+//            Statement stmt = con.createStatement();
+//            // Create string for SQL statement
+//
+//            String strSelect =
+//                    "SELECT * "
+//                            + "FROM city "
+//                            + whereStatement
+//                            + "ORDER BY population DESC "
+//                            + limitStatement;
+//
+//            System.out.println(strSelect);
+//            // Execute SQL statement
+//            ResultSet rset = stmt.executeQuery(strSelect);
+//            // Return new country if valid.
+//            // Check one is returned
+//            ArrayList<city> cities = new ArrayList<city>();
+//            while (rset.next())
+//            {
+//                city c = new city();
+//                c.name = rset.getString("name");
+//                c.countryCode = rset.getString("countrycode");
+//                c.district = rset.getString("district");
+//                c.population = rset.getInt("population");
+//                cities.add(c);
+//            }
+//            return cities;
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//            System.out.println("Failed to get cities");
+//            return null;
+//        }
+//    }
 
     public void displayCities(ArrayList<city> cities)
     {
@@ -666,5 +666,125 @@ public class Main
             System.out.println("Failed to get cities");
             return null;
         }
+    }
+
+    public ArrayList<city> getCities()
+    {
+        return getCities("");
+    }
+
+    public ArrayList<city> getCities(String whereStatement)
+    {
+        return getCities(whereStatement, "");
+    }
+
+    public ArrayList<city> getCities(String whereStatement, String limitStatement)
+    {
+        return getCities(whereStatement, limitStatement, "");
+    }
+
+    public ArrayList<city> getCities(String whereStatement, String limitStatement, String joinStatement)
+    {
+        if(whereStatement == null || limitStatement == null || joinStatement == null){System.out.println("Part of your statement is null, use an empty string instead [getCities]"); return null;}
+
+        String strSelect =
+                "SELECT city.name, city.countrycode, city.district, city.population "
+                        + "FROM city "
+                        + joinStatement
+                        + whereStatement
+                        + "ORDER BY city.population DESC "
+                        + limitStatement;
+
+        ResultSet rset = executeSQL(strSelect);
+        return parseCity(rset);
+    }
+
+    public ArrayList<city> parseCity (ResultSet rset)
+    {
+        try {
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next()) {
+                city c = new city();
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities [parseCity]");
+            return null;
+        }
+    }
+//
+//    public void displayCities(ArrayList<city> cities)
+//    {
+//        if(cities == null) {System.out.println("countries arraylist is null [displayCities]"); return;}
+//        if(cities.isEmpty()) {System.out.println("countries arraylist is empty [displayCities]"); return;}
+//
+//        for (city city : cities)
+//        {
+//            if(city == null) {System.out.println("country is null [displayCities]"); return;}
+//
+//            System.out.println("Name: " + city.name + " Population: " + city.population);
+//        }
+//    }
+
+
+    public ResultSet executeSQL(String statement)
+    {
+        if(statement == null){System.out.println("Part of your statement is null [executeSQl]"); return null;}
+
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            System.out.println(statement);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(statement);
+            // Return new country if valid.
+            // Check one is returned
+            if(rset == null){System.out.println("NO RESULTS FROM STATEMENT [executeSQl]");}
+            return rset;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get statements [executeSQl]");
+            return null;
+        }
+    }
+
+    public void printSQL(ResultSet rset)
+    {
+        try {
+            ResultSetMetaData rmet = rset.getMetaData();
+            int columnCount = rmet.getColumnCount();
+            for(int i = 1; i <= columnCount; i++)
+            {
+                System.out.print(rmet.getColumnName(i) + "    ");
+            }
+            System.out.println();
+
+            while (rset.next())
+            {
+                for(int i = 1; i <= columnCount; i++)
+                {
+                    System.out.print(rset.getString(i));
+                }
+                System.out.println();
+            }
+            System.out.println("---");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to print SQL output [printSQL]");
+        }
+
     }
 }
