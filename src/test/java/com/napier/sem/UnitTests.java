@@ -282,4 +282,46 @@ public class UnitTests
     {
         app.displayCities(null);
     }
+
+    @Test
+    void displyCitiesNullMember(){
+        ArrayList<city> cities = new ArrayList<city>();
+        cities.add(null);
+        app.displayCities(cities);
+    }
+
+    @Test
+    void displayCitiesEmpty(){
+        ArrayList<city> cities = new ArrayList<city>();
+        app.displayCities(cities);
+    }
+
+    @Test
+    void displayCitiesEmptyMember(){
+        ArrayList<city> cities = new ArrayList<city>();
+        city test = new city();
+        cities.add(test);
+        app.displayCities(cities);
+
+    }
+
+    @Test
+    void displayCitiesNormal(){
+        ArrayList<city> cities = new ArrayList<city>();
+        city test = new city();
+        test.name = "Richmond";
+        test.population = 100;
+        cities.add(test);
+        app.displayCities(cities);
+    }
+
+    @Test
+    void displayCitiesCityNameNull(){
+        ArrayList<city> cities = new ArrayList<city>();
+        city test = new city();
+        test.name = null;
+        test.population = 100;
+        cities.add(test);
+        app.displayCities(cities);
+    }
 }
