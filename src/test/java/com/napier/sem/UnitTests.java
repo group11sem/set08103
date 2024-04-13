@@ -277,4 +277,9 @@ public class UnitTests
         app.displayCountries(countries);
     }
 
+    @Test
+    void displayCitiesNameNull()
+    {
+        app.displayCities(null);
+    }
 }
