@@ -402,34 +402,31 @@ public class Main
     }
 
 
-    public ArrayList<country> getCountries(String whereStatement, String limitStatement)
+    public ArrayList<country> getCountries(String whereStatement, String limitStatement, String joinStatement)
     {
         if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
 
-        try
-        {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
+        String strSelect =
+                "SELECT city.name, city.countrycode, city.district, city.population "
+                        + "FROM city "
+                        + joinStatement
+                        + whereStatement
+                        + "ORDER BY city.population DESC "
+                        + limitStatement;
+        ResultSet rset = executeSQL(strSelect);
 
-            String strSelect =
-                    "SELECT * "
-                            + "FROM country "
-                            + whereStatement
-                            + "ORDER BY population DESC "
-                            + limitStatement;
+        return parseCountry(rset);
+    }
 
-            System.out.println(strSelect);
-            // Execute SQL statement
-            ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new country if valid.
-            // Check one is returned
+    public ArrayList<country> parseCountry (ResultSet rset)
+    {
+        try {
             ArrayList<country> countries = new ArrayList<country>();
-            while (rset.next())
-            {
+            while (rset.next()) {
                 country c = new country();
                 c.code = rset.getString("code");
                 c.name = rset.getString("name");
+                c.continent = rset.getString("continent");
                 c.region = rset.getString("region");
                 c.population = rset.getInt("population");
                 c.capital = rset.getInt("capital");
@@ -440,11 +437,10 @@ public class Main
         catch (Exception e)
         {
             System.out.println(e.getMessage());
-            System.out.println("Failed to get countries");
+            System.out.println("Failed to get countries [parseCountry]");
             return null;
         }
     }
-
     public void displayCountries(ArrayList<country> countries)
     {
         if(countries == null) {System.out.println("countries arraylist is null"); return;}
@@ -488,6 +484,28 @@ public class Main
 
         ResultSet rset = executeSQL(strSelect);
         return parseCity(rset);
+    }
+
+    public ArrayList<city> parseCity (ResultSet rset)
+    {
+        try {
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next()) {
+                city c = new city();
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities [parseCity]");
+            return null;
+        }
     }
 
     public void displayCities(ArrayList<city> cities)
@@ -557,25 +575,5 @@ public class Main
 
     }
 
-    public ArrayList<city> parseCity (ResultSet rset)
-    {
-        try {
-            ArrayList<city> cities = new ArrayList<city>();
-            while (rset.next()) {
-                city c = new city();
-                c.name = rset.getString("name");
-                c.countryCode = rset.getString("countrycode");
-                c.district = rset.getString("district");
-                c.population = rset.getInt("population");
-                cities.add(c);
-            }
-            return cities;
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get cities [parseCity]");
-            return null;
-        }
-    }
+
 }
