@@ -43,9 +43,7 @@ public class Main
 
         System.out.println("Displaying all countries in the world ordered by largest to smallest population: ");
 
-        ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
-        a.displayWorldPopByCountry(countries);
 
         System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
         // Disconnect from database
@@ -59,9 +57,7 @@ public class Main
 
         System.out.println(n_city_world);
 
-        cities = a.getALlCitiesPopInWorld();
 
-        a.displayNCitiesInWorld(cities, n_city_world);
 
 
         //FERGUS WORK, ISSUES #4 TO #?
@@ -125,7 +121,7 @@ public class Main
 
 
 
-        a.displayCountries(a.getCountriesInContinent("Europe"));
+
 
 
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
@@ -133,12 +129,35 @@ public class Main
         a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
         System.out.println("\n Displaying Captial Cities in the World:");
         a.displayCities(a.getCapitalsInWorld());
-        System.out.println("\n Displaying Captial Cities in a continent:");
-        a.displayCities(a.getCapitalsInContinent("Europe"));
-        System.out.println("\n Displaying Captial Cities in a region:");
-        a.displayCities(a.getCapitalsInRegion("Western Europe"));
+
+
         System.out.println("\n Displaying Top N Captial Cities in the world:");
         a.displayNCitiesInWorld(a.getCapitalsInWorld(), 5);
+
+        System.out.println("\n All countries pop in the world");
+        ArrayList<country> countries = a.getALlCountriesPopInWorld();
+
+        a.displayWorldPopByCountry(countries);
+
+        System.out.println("\n Cities Pop in the World");
+        cities = a.getALlCitiesPopInWorld();
+
+        a.displayNCitiesInWorld(cities, 4);
+
+        System.out.println("\n Displaying North American Countries:");
+        a.displayCountries(a.getCountriesInContinent("North America"));
+
+        System.out.println("\n Displaying Eastern Asia Countries:");
+        a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
+
+        System.out.println("\n Displaying Captial Cities in the World:");
+        a.displayCities(a.getCapitalsInWorld());
+
+        System.out.println("\n Displaying Captial Cities in a continent:");
+        a.displayCities(a.getCapitalsInContinent("Europe"));
+
+        System.out.println("\n Displaying Captial Cities in a region:");
+        a.displayCities(a.getCapitalsInRegion("Western Europe"));
         a.disconnect();
     }
     /**
