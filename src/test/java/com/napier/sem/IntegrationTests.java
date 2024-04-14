@@ -143,4 +143,52 @@ public class IntegrationTests
         assertEquals(cities.get(3).population, 731200);
     }
 
+    @Test
+    void getCapitalsInRegionNullTest(){
+        ArrayList<city> cities = app.getCapitalsInRegion("Western Euro");
+        ArrayList<city> test = new ArrayList<city>();
+        assertEquals(cities, test );
+    }
+
+    @Test
+    void getCapitalsInContinentNullTest(){
+        ArrayList<city> cities = app.getCapitalsInContinent("Asiar");
+        ArrayList<city> test = new ArrayList<city>();
+        assertEquals(cities, test );
+    }
+
+
+    @Test
+    void getCountriesInRegionNullTest(){
+        ArrayList<country> countries = app.getCountriesInRegion("Ghk;");
+        ArrayList<country> test = new ArrayList<country>();
+        assertEquals(countries, test );
+    }
+
+    @Test
+    void getCountriesInContinentNullTest() {
+        ArrayList<country> countries = app.getCountriesInContinent("Europ");
+        ArrayList<country> test = new ArrayList<country>();
+        assertEquals(countries, test);
+    }
+
+    @Test
+    void getCitiesPopInDistrictNullTest(){
+        ArrayList<city> cities = app.getALlCitiesPopInDistrict("dsgasd");
+        ArrayList<city> test = new ArrayList<city>();
+        assertEquals(cities, test );
+    }
+
+    @Test
+    void getCountryNullTest(){
+        country area = app.getCountryPop("United St");
+        assertEquals(area, null);
+
+    }
+
+    @Test
+    void getCityPopNullTest(){
+        city area = app.getCityPop("Edinbur");
+        assertEquals(area, null);
+    }
 }
