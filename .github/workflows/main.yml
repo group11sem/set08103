@@ -37,10 +37,10 @@ jobs:
           mvn -Dtest=com.napier.sem.IntegrationTests test
           docker stop world-db
           docker rm world-db
-          docker image rm database
-          - name: CodeCov
-          uses: codecov/codecov-action@v4.0.1
-          with:
+          docker image rm database 
+      - name: CodeCov
+        uses: codecov/codecov-action@v4.0.1
+        with:
           token: ${{ secrets.CODECOV_TOKEN }} # now required for public repos too
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
