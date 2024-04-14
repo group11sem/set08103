@@ -158,6 +158,18 @@ public class Main
 
         System.out.println("\n Displaying Captial Cities in a region:");
         a.displayCities(a.getCapitalsInRegion("Western Europe"));
+
+        System.out.println("\n Displaying World Population:");
+        a.displayWorldPop(a.getALlCountriesPopInWorld());
+
+        System.out.println("\n Displaying the population in all of Eastern Asia:");
+        a.displayRegionPop(a.getCountriesInRegion("Eastern Asia"), "Eastern Asia");
+
+        System.out.println("\n Displaying the top N populated Capital Cities in a region");
+        a.displayNCitiesInWorld(a.getCapitalsInRegion("Western Europe"), 5);
+
+        System.out.println("\n Displaying the top N populated Capital Cities in a region");
+        a.displayNCitiesInWorld((a.getCapitalsInContinent("Europe")),5);
         a.disconnect();
     }
     /**
@@ -847,5 +859,29 @@ public class Main
             System.out.println("Failed to print SQL output [printSQL]");
         }
 
+    }
+
+    public void displayWorldPop(ArrayList<country> countries)
+    {
+        if (countries != null)
+        {
+            int population = 0;
+            for(int i = 0; i < countries.size();i++){
+                population += countries.get(i).population;
+            }
+            System.out.println("World Population: " + population);
+        }
+    }
+
+    public void displayRegionPop(ArrayList<country> countries, String name)
+    {
+        if (countries != null)
+        {
+            int population = 0;
+            for(int i = 0; i < countries.size();i++){
+                population += countries.get(i).population;
+            }
+            System.out.println("Region Name: " + name + "\n" + "Population: " + population);
+        }
     }
 }
