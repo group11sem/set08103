@@ -1,9 +1,6 @@
-name: A workflow for my Hello World App!
-on:
-  push:
-    branches:
-      - master
-      - develop
+name: A workflow for my Hello World App
+on: push
+
 jobs:
   UnitTests:
     name: Unit Tests
@@ -19,8 +16,7 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.sem.AppTest test
-
+        run: mvn -Dtest=com.napier.sem.UnitTests test
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-20.04
@@ -34,22 +30,23 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Integration Tests and CodeCov
+      - name: Integration Tests
         run: |
           docker build -t database ./db 
           docker run --name world-db -dp 33060:3306 database
-          mvn -Dtest=com.napier.sem.IntegrationTest test          
+          mvn -Dtest=com.napier.sem.IntegrationTests test
           docker stop world-db
           docker rm world-db
-          docker image rm database                    
-      - name: CodeCov
-        uses: codecov/codecov-action@v4.0.1
-        with:
+          docker image rm database
+          - name: CodeCov
+          uses: codecov/codecov-action@v4.0.1
+          with:
           token: ${{ secrets.CODECOV_TOKEN }} # now required for public repos too
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
-          slug: /group11sem/set08103
+          slug: <GitHub username>/<repository name>
+
   build:
     name: Build Run in Docker and Deploy Release
     runs-on: ubuntu-20.04
@@ -74,3 +71,5 @@ jobs:
           automatic_release_tag: "latest"
           files: |
             ./target/*.jar
+  
+          
