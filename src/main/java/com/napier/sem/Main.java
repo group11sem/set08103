@@ -20,32 +20,26 @@ public class Main
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
-        /**
 
+        //Issue #29
         //Gets the population of given country
         country area = a.getCountryPop("United States");
-
         //Displays the information of given country
         a.displayCountry(area);
 
+        //Issue #31
         System.out.println("Displaying a city's Population: ");
-
         city place = a.getCityPop("Edinburgh");
-
         a.displayCity(place);
 
+        //Issue #30
         //Displaying all cities in a district and their population
         ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
-
         System.out.println("Displaying a district's Population: ");
-
         a.displayDistrictPop(cities, "Scotland");
 
-        System.out.println("Displaying all countries in the world ordered by largest to smallest population: ");
 
 
-
-        System.out.println("Displaying N largest cities in the world where N is provided by the user: ");
         // Disconnect from database
 
         Scanner scan = new Scanner(System.in);
@@ -124,62 +118,66 @@ public class Main
 
 
 
-        a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
+        //Issue #11
         System.out.println("\n Displaying Scotland Cities:");
         a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
+        //Issue #17
         System.out.println("\n Displaying Captial Cities in the World:");
         a.displayCities(a.getCapitalsInWorld());
 
-
+        //Issue #20
         System.out.println("\n Displaying Top N Captial Cities in the world:");
         a.displayNCitiesInWorld(a.getCapitalsInWorld(), 5);
-
+        //Issue #1
         System.out.println("\n All countries pop in the world");
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
         a.displayWorldPopByCountry(countries);
-
-        System.out.println("\n Cities Pop in the World");
+        //Issue #12
+        System.out.println("\n N Cities Pop in the World");
         cities = a.getALlCitiesPopInWorld();
 
         a.displayNCitiesInWorld(cities, 4);
-
+        //Issue #2
         System.out.println("\n Displaying North American Countries:");
         a.displayCountries(a.getCountriesInContinent("North America"));
-
+        //Issue #3
         System.out.println("\n Displaying Eastern Asia Countries:");
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
-
+        //Issue #17
         System.out.println("\n Displaying Captial Cities in the World:");
         a.displayCities(a.getCapitalsInWorld());
-
+        //Issue #18
         System.out.println("\n Displaying Captial Cities in a continent:");
         a.displayCities(a.getCapitalsInContinent("Europe"));
-
+        //Issue #19
         System.out.println("\n Displaying Captial Cities in a region:");
         a.displayCities(a.getCapitalsInRegion("Western Europe"));
-
+        //Issue #26
         System.out.println("\n Displaying World Population:");
         a.displayWorldPop(a.getALlCountriesPopInWorld());
-
+        //Issue #28
         System.out.println("\n Displaying the population in all of Eastern Asia:");
         a.displayRegionPop(a.getCountriesInRegion("Eastern Asia"), "Eastern Asia");
-
+        //Issue #22
         System.out.println("\n Displaying the top N populated Capital Cities in a region");
         a.displayNCitiesInWorld(a.getCapitalsInRegion("Western Europe"), 5);
-
+        //Issue #21
         System.out.println("\n Displaying the top N populated Capital Cities in a region");
         a.displayNCitiesInWorld((a.getCapitalsInContinent("Europe")),5);
-
+        //Issue #25
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a country");
         a.displayCountryOfCitiesAndNonCities(a.getCountryPop("United States"), a.getCities("WHERE country.code='USA' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
-
+        //Issue #24
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Region");
         a.displayRegionOfCitiesAndNonCities("Eastern Asia", a.getCountriesInRegion("Eastern Asia"), a.getCitiesInRegion("Eastern Asia"));
-         **/
+        //Issue #23
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Continent");
         a.displayRegionOfCitiesAndNonCities("Europe", a.getCountriesInContinent("Europe"), a.getCitiesInContinent("Europe"));
 
+        //Issue #27
+        System.out.println("\n Displaying the total population of a Continent");
+        a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe");
         a.disconnect();
     }
     /**
@@ -581,6 +579,7 @@ public class Main
         {
             // Create an SQL statement
             Statement stmt = con.createStatement();
+
             // Create string for SQL statement
             String strSelect =
                     "SELECT name, population "
@@ -1000,6 +999,18 @@ public class Main
             System.out.println(e.getMessage());
             System.out.println("Failed to get cities");
             return null;
+        }
+    }
+
+    public void displayContinentPop(ArrayList<country> countries, String name)
+    {
+        if (countries != null)
+        {
+            int population = 0;
+            for(int i = 0; i < countries.size();i++){
+                population += countries.get(i).population;
+            }
+            System.out.println("Continent Name: " + name + "\n" + "Population: " + population);
         }
     }
 }
