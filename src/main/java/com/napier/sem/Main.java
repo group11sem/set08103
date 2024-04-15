@@ -20,7 +20,7 @@ public class Main
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
-
+        /**
 
         //Gets the population of given country
         country area = a.getCountryPop("United States");
@@ -170,6 +170,16 @@ public class Main
 
         System.out.println("\n Displaying the top N populated Capital Cities in a region");
         a.displayNCitiesInWorld((a.getCapitalsInContinent("Europe")),5);
+
+        System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a country");
+        a.displayCountryOfCitiesAndNonCities(a.getCountryPop("United States"), a.getCities("WHERE country.code='USA' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
+
+        System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Region");
+        a.displayRegionOfCitiesAndNonCities("Eastern Asia", a.getCountriesInRegion("Eastern Asia"), a.getCitiesInRegion("Eastern Asia"));
+         **/
+        System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Continent");
+        a.displayRegionOfCitiesAndNonCities("Europe", a.getCountriesInContinent("Europe"), a.getCitiesInContinent("Europe"));
+
         a.disconnect();
     }
     /**
@@ -882,6 +892,114 @@ public class Main
                 population += countries.get(i).population;
             }
             System.out.println("Region Name: " + name + "\n" + "Population: " + population);
+        }
+    }
+
+    public void displayCountryOfCitiesAndNonCities(country area, ArrayList<city> cities)
+    {
+        if (cities != null && area != null)
+        {
+            int population = 0;
+            for(int i = 0; i < cities.size();i++){
+                population += cities.get(i).population;
+            }
+            int not_cities = area.population - population;
+            System.out.println("Country Name: " + area.name + "" + "Population: " + area.population
+            + "\n Population in Cities: " + population +
+                    "\n Population not in Cities: " + not_cities + "\n");
+        }
+    }
+
+    public void displayRegionOfCitiesAndNonCities(String name,ArrayList<country> countries, ArrayList<city> cities)
+    {
+        if (cities != null && countries != null)
+        {
+            int total_pop = 0;
+            for(int i = 0; i < countries.size();i++){
+                total_pop += countries.get(i).population;
+            }
+            int city_population = 0;
+            for(int j = 0; j < cities.size();j++){
+                city_population += cities.get(j).population;
+            }
+            int not_cities = total_pop - city_population;
+            System.out.println("Country Name: " + name + " " + "Population: " + total_pop
+                    + "\n Population in Cities: " + city_population +
+                    "\n Population not in Cities: " + not_cities + "\n");
+        }
+    }
+
+    public ArrayList<city> getCitiesInRegion(String region){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT city.name, city.population "
+                            + "FROM city, country "
+                            + "WHERE country.region = '" + region + "' "
+                            + "AND country.code = city.countrycode "
+                            + "ORDER BY population DESC ";
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city c = new city();
+                c.name = rset.getString("city.name");
+                c.population = rset.getInt("city.population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
+        }
+    }
+
+    public ArrayList<city> getCitiesInContinent(String continent){
+        try
+        {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+
+            String strSelect =
+                    "SELECT city.name, city.population "
+                            + "FROM city, country "
+                            + "WHERE country.continent = '" + continent + "' "
+                            + "AND country.code = city.countrycode "
+                            + "ORDER BY population DESC ";
+
+            System.out.println(strSelect);
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            ArrayList<city> cities = new ArrayList<city>();
+            while (rset.next())
+            {
+                city c = new city();
+                c.name = rset.getString("city.name");
+                c.population = rset.getInt("city.population");
+                cities.add(c);
+            }
+            return cities;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get cities");
+            return null;
         }
     }
 }
