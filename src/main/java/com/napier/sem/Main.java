@@ -270,6 +270,11 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayCountry( country )
+     * @param area
+     * Description: Function to display the contents of a country variable
+     */
     public void displayCountry(country area)
     {
         if (area != null)
@@ -280,6 +285,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: getCityPop(city Name)
+     * @param name
+     * @return city
+     * Description: Function takes in a name of a city, exports the city information form the data
+     * base and returns a city variable with the information gathered
+     */
     public city getCityPop(String name)
     {
         try
@@ -313,6 +325,11 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayCity( city )
+     * @param area
+     * Description: Function displays the information of one city
+     */
     public void displayCity(city area)
     {
         if (area != null)
@@ -323,6 +340,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: getAllCitiesPopInDistict( District name )
+     * @param name
+     * @return Array of cities
+     * Description: functions gathers all information on cities within a district
+     * and returns an array of cities
+     */
     public ArrayList<city> getALlCitiesPopInDistrict(String name)
     {
         try
@@ -355,6 +379,14 @@ public class Main
             return null;
         }
     }
+
+    /**
+     * FunctionL displayDistrictPop(Array of cities, District name )
+     * @param cities
+     * @param name
+     * Description: Adds all the populations of the cities within a district
+     * and outputs the name and population of the district
+     */
     public void displayDistrictPop(ArrayList<city> cities, String name)
     {
         if (cities != null)
@@ -368,6 +400,12 @@ public class Main
         }
     }
 
+    /**
+     * Function getAllCountriesPopInWorld()
+     * @return array of countries
+     * Description: gathers country information on all the countries in the world
+     * and places them in an array list and returns that array list
+     */
     public ArrayList<country> getALlCountriesPopInWorld()
     {
         try
@@ -401,6 +439,12 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayWorldPopByCountry(Array of countries )
+     * @param countries
+     * Description: Displays all the countries in the world and their respective
+     * populations
+     */
     public void displayWorldPopByCountry(ArrayList<country> countries)
     {
         if (countries != null)
@@ -412,6 +456,12 @@ public class Main
         }
     }
 
+    /**
+     * Function: getAllCitiesPopInWorld()
+     * @return array of cities
+     * Descirption: gets all the cities in the world and places them in
+     * an array list and returns the array list.
+     */
     public ArrayList<city> getALlCitiesPopInWorld()
     {
         try
@@ -445,6 +495,12 @@ public class Main
         }
     }
 
+    /**
+     * Functions: displayNCitiesInWorld( array of cities, limiting factor N )
+     * @param cities
+     * @param n
+     * Descrition: Displays the top N highest populated Cities in the world
+     */
     public void displayNCitiesInWorld(ArrayList<city> cities, int n)
     {
         if (cities != null)
@@ -574,6 +630,13 @@ public class Main
         }
     }
 
+    /**
+     * Function getCountriesInContinent( Continent Name )
+     * @param continent
+     * @return Array list of countries
+     * Description: Gathers all Countries information from a continent, places all the
+     * countries in an array list, and returns that array list
+     */
     public ArrayList<country> getCountriesInContinent(String continent){
         try
         {
@@ -608,6 +671,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: getCountriesInRegion( Region Name )
+     * @param region
+     * @return array list of countries
+     * Description: function takes in a name of a region, gathers all countries in that
+     * region, outs all those countries in an array list, and returns that array list
+     */
     public ArrayList<country> getCountriesInRegion(String region){
         try
         {
@@ -640,6 +710,12 @@ public class Main
         }
     }
 
+    /**
+     * Function: getCapitalsInWorld()
+     * @return array list of capitals
+     * Description: functions gathers all capital city information in the world,
+     * put all the capitals in an array list, and returns that array list.
+     */
     public ArrayList<city> getCapitalsInWorld(){
         try
         {
@@ -676,6 +752,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: getCaptialsInContinent( Continent Name )
+     * @param continent
+     * @return array list of cities
+     * Description: gathers all the capital cities from a continent, puts them all
+     * in an array list, and returns said array list.
+     */
     public ArrayList<city> getCapitalsInContinent(String continent){
         try
         {
@@ -713,6 +796,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: getCaptialsInRegion( Region name )
+     * @param region
+     * @return array list of cities
+     * Description: gathers all the capital cities in a region, puts them in a
+     * array list, and returns said array list.
+     */
     public ArrayList<city> getCapitalsInRegion(String region){
         try
         {
@@ -870,6 +960,12 @@ public class Main
 
     }
 
+    /**
+     * Function displayWorldPop( array list of countries )
+     * @param countries
+     * Functions: adds up the populations of all the countries in the world
+     * and displays it.
+     */
     public void displayWorldPop(ArrayList<country> countries)
     {
         if (countries != null)
@@ -882,6 +978,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayRegionPop(array list of countries, region name)
+     * @param countries
+     * @param name
+     * Description: Adds up all the populations of countries in the region and
+     * displays the population of the region and its name.
+     */
     public void displayRegionPop(ArrayList<country> countries, String name)
     {
         if (countries != null)
@@ -894,6 +997,14 @@ public class Main
         }
     }
 
+    /**
+     * Function displayCountryOfCitiesAndNonCities( country, array list of cities )
+     * @param area
+     * @param cities
+     * Description: Adds up all the populations of people living in cities in a country, finds the
+     * population of people not living in cities in that country, and displays the
+     * total population, population living in cities, and population not living in cities.
+     */
     public void displayCountryOfCitiesAndNonCities(country area, ArrayList<city> cities)
     {
         if (cities != null && area != null)
@@ -909,6 +1020,17 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayRegionOfCitiesAndNonCities( Region name, Array list of countries, array list of cities)
+     * @param name
+     * @param countries
+     * @param cities
+     * Description: functions finds total population by adding up all the country populations
+     * in a region, it finds the population of people living in cities by adding up all the cities
+     * populations, and finds the number of people not living in cities by subtracting the total population
+     * from the population living in cities. It then displyas the total population, population living in cities, and
+     * population not living in cities of that region.
+     */
     public void displayRegionOfCitiesAndNonCities(String name,ArrayList<country> countries, ArrayList<city> cities)
     {
         if (cities != null && countries != null)
@@ -928,6 +1050,13 @@ public class Main
         }
     }
 
+    /**
+     * Function getCitiesInRegion( region name )
+     * @param region
+     * @return array list of cities
+     * Description: Gathers all the cities in a region and returns them all
+     * in the form of an array list.
+     */
     public ArrayList<city> getCitiesInRegion(String region){
         try
         {
@@ -965,6 +1094,13 @@ public class Main
         }
     }
 
+    /**
+     * Function getCitiesInContinent( Continent name )
+     * @param continent
+     * @return array list of cities
+     * Description: gathers the information of all the cities in a continent
+     * and returns all in the form of an array list.
+     */
     public ArrayList<city> getCitiesInContinent(String continent){
         try
         {
@@ -1002,6 +1138,13 @@ public class Main
         }
     }
 
+    /**
+     * Function: displayContinentPop(Array list of countries, continent name )
+     * @param countries
+     * @param name
+     * Description: Adds up the population of all countries in a continent and displays
+     * the total population and the name of that continent.
+     */
     public void displayContinentPop(ArrayList<country> countries, String name)
     {
         if (countries != null)
