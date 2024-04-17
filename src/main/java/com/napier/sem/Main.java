@@ -54,7 +54,7 @@ public class Main
 
 
 
-        //FERGUS WORK, ISSUES #4 TO #?
+        //FERGUS WORK, ISSUES #4 TO #10
 
         //#4
         a.displayCountries(a.getCountries("", "LIMIT 3 "));
@@ -178,6 +178,13 @@ public class Main
         //Issue #27
         System.out.println("\n Displaying the total population of a Continent");
         a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe");
+
+        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY POP DESC"));
+
+
+
+
+
         a.disconnect();
     }
     /**
@@ -574,49 +581,6 @@ public class Main
     }
 
 
-//
-//    public ArrayList<city> getCities(String whereStatement, String limitStatement)
-//    {
-//        if(whereStatement == null || limitStatement == null){System.out.println("Part of your statement is null, use an empty string instead"); return null;}
-//
-//        try
-//        {
-//            // Create an SQL statement
-//            Statement stmt = con.createStatement();
-//            // Create string for SQL statement
-//
-//            String strSelect =
-//                    "SELECT * "
-//                            + "FROM city "
-//                            + whereStatement
-//                            + "ORDER BY population DESC "
-//                            + limitStatement;
-//
-//            System.out.println(strSelect);
-//            // Execute SQL statement
-//            ResultSet rset = stmt.executeQuery(strSelect);
-//            // Return new country if valid.
-//            // Check one is returned
-//            ArrayList<city> cities = new ArrayList<city>();
-//            while (rset.next())
-//            {
-//                city c = new city();
-//                c.name = rset.getString("name");
-//                c.countryCode = rset.getString("countrycode");
-//                c.district = rset.getString("district");
-//                c.population = rset.getInt("population");
-//                cities.add(c);
-//            }
-//            return cities;
-//        }
-//        catch (Exception e)
-//        {
-//            System.out.println(e.getMessage());
-//            System.out.println("Failed to get cities");
-//            return null;
-//        }
-//    }
-
     public void displayCities(ArrayList<city> cities)
     {
         if(cities == null) {System.out.println("countries arraylist is null"); return;}
@@ -892,19 +856,6 @@ public class Main
             return null;
         }
     }
-//
-//    public void displayCities(ArrayList<city> cities)
-//    {
-//        if(cities == null) {System.out.println("countries arraylist is null [displayCities]"); return;}
-//        if(cities.isEmpty()) {System.out.println("countries arraylist is empty [displayCities]"); return;}
-//
-//        for (city city : cities)
-//        {
-//            if(city == null) {System.out.println("country is null [displayCities]"); return;}
-//
-//            System.out.println("Name: " + city.name + " Population: " + city.population);
-//        }
-//    }
 
 
     public ResultSet executeSQL(String statement)
@@ -946,7 +897,7 @@ public class Main
             {
                 for(int i = 1; i <= columnCount; i++)
                 {
-                    System.out.print(rset.getString(i));
+                    System.out.print(rset.getString(i) + "  ");
                 }
                 System.out.println();
             }
