@@ -179,10 +179,7 @@ public class Main
         System.out.println("\n Displaying the total population of a Continent");
         a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe");
 
-        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY POP DESC"));
-
-
-
+        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC"));
 
 
         a.disconnect();
