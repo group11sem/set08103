@@ -20,6 +20,10 @@ public class IntegrationTests
 
     }
 
+    /**
+     * Testing get Country method to ensure it is
+     * able to produce the correct country information
+     */
     @Test
     void getCountryTest(){
         country area = app.getCountryPop("United States");
@@ -27,6 +31,10 @@ public class IntegrationTests
         assertEquals(area.name, "United States");
     }
 
+    /**
+     * Testing get City population method to check
+     * that it can obtain the correct city information
+     */
     @Test
     void getCityPopTest(){
         city area = app.getCityPop("Edinburgh");
@@ -34,6 +42,11 @@ public class IntegrationTests
         assertEquals(area.population, 450180);
     }
 
+    /**
+     * Testing that get all cities population in district method
+     * can obtain all the information for all the cities in
+     * that specific district
+     */
     @Test
     void getAllCitiesPopInDistrictTest(){
         ArrayList<city> cities = app.getALlCitiesPopInDistrict("Scotland");
@@ -48,6 +61,11 @@ public class IntegrationTests
 
     }
 
+    /**
+     * Testing if get all countries population in world method
+     * is able to return a country array list with correct indexed country
+     * elements
+     */
     @Test
     void getAllCountriesPopInWorldTest(){
         ArrayList<country> countries = app.getALlCountriesPopInWorld();
@@ -61,6 +79,11 @@ public class IntegrationTests
         assertEquals(countries.get(3).population, 212107000);
     }
 
+    /**
+     * Testing that get all cities population in world method
+     * is able to obtain an array list of all
+     * the cities in the world
+     */
     @Test
     void getAllCitiesPopInWorldTest(){
         ArrayList<city> cities = app.getALlCitiesPopInWorld();
@@ -74,6 +97,11 @@ public class IntegrationTests
         assertEquals(cities.get(3).population, 9696300);
     }
 
+    /**
+     * Testing that get countries in continent method is able
+     * to obtain an array list of all the countries in a
+     * continent
+     */
     @Test
     void getCountriesInContinentTest(){
         ArrayList<country> countries = app.getCountriesInContinent("North America");
@@ -87,6 +115,11 @@ public class IntegrationTests
         assertEquals(countries.get(3).population, 11385000);
     }
 
+    /**
+     * Testing that get countries in region method is able
+     * to obtain an array list of all the countries in a
+     * region
+     */
     @Test
     void getCountriesInRegionTest(){
         ArrayList<country> countries = app.getCountriesInRegion("Eastern Asia");
@@ -104,6 +137,11 @@ public class IntegrationTests
         assertEquals(countries.get(5).population, 6782000);
     }
 
+    /**
+     * Testing if get capitals in world method is able to
+     * return an array list of all the capital cities in the
+     * world
+     */
     @Test
     void getCapitalsInWorldTest(){
         ArrayList<city> cities = app.getCapitalsInWorld();
@@ -117,6 +155,11 @@ public class IntegrationTests
         assertEquals(cities.get(3).population, 8389200);
     }
 
+    /**
+     * Testing if get capitals in continent method is able
+     * to return an array list of all the capital cities
+     * in a continent
+     */
     @Test
     void getCapitalsInContinentTest(){
         ArrayList<city> cities = app.getCapitalsInContinent("Europe");
@@ -130,6 +173,10 @@ public class IntegrationTests
         assertEquals(cities.get(3).population, 2879052);
     }
 
+    /**
+     * Testing if get capitals region method returns
+     * an array list of all the captials in a region
+     */
     @Test
     void getCapitalsInRegionTest(){
         ArrayList<city> cities = app.getCapitalsInRegion("Western Europe");
@@ -143,6 +190,10 @@ public class IntegrationTests
         assertEquals(cities.get(3).population, 731200);
     }
 
+    /**
+     * Testing if get capitals in region method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCapitalsInRegionNullTest(){
         ArrayList<city> cities = app.getCapitalsInRegion("Western Euro");
@@ -150,6 +201,10 @@ public class IntegrationTests
         assertEquals(cities, test );
     }
 
+    /**
+     * Testing if get capitals in continent method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCapitalsInContinentNullTest(){
         ArrayList<city> cities = app.getCapitalsInContinent("Asiar");
@@ -158,6 +213,10 @@ public class IntegrationTests
     }
 
 
+    /**
+     * Testing if get countries in region method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCountriesInRegionNullTest(){
         ArrayList<country> countries = app.getCountriesInRegion("Ghk;");
@@ -165,6 +224,10 @@ public class IntegrationTests
         assertEquals(countries, test );
     }
 
+    /**
+     * Testing if get countries in continent method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCountriesInContinentNullTest() {
         ArrayList<country> countries = app.getCountriesInContinent("Europ");
@@ -172,6 +235,11 @@ public class IntegrationTests
         assertEquals(countries, test);
     }
 
+    /**
+     * Testing if get cities population in district
+     * method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCitiesPopInDistrictNullTest(){
         ArrayList<city> cities = app.getALlCitiesPopInDistrict("dsgasd");
@@ -179,6 +247,10 @@ public class IntegrationTests
         assertEquals(cities, test );
     }
 
+    /**
+     * Testing if get country method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCountryNullTest(){
         country area = app.getCountryPop("United St");
@@ -186,6 +258,10 @@ public class IntegrationTests
 
     }
 
+    /**
+     * Testing if get city method is able to handle
+     * an incorrect parameter and not cause an error
+     */
     @Test
     void getCityPopNullTest(){
         city area = app.getCityPop("Edinbur");
