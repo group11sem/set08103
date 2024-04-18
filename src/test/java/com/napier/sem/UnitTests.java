@@ -18,12 +18,19 @@ public class UnitTests
         app = new Main();
     }
 
+
+    /**
+     * Testing if displayCountry(null) does output and does not produce an error.
+     */
     @Test
     void displayCountryNull()
     {
         app.displayCountry(null);
     }
 
+    /**
+     * Testing if displayCountry(area) with an empty country area does not produce errors
+     */
     @Test
     void displayCountryEmpty()
     {
@@ -31,6 +38,10 @@ public class UnitTests
         app.displayCountry(area);
     }
 
+    /**
+     * Testing if the display Country method outputs the correct data when fed
+     * a country variable with all correct information
+     */
     @Test
     void displayCountry()
     {
@@ -40,6 +51,11 @@ public class UnitTests
         app.displayCountry(area);
     }
 
+    /**
+     * Testing if the display Country method outputs the correct data
+     * when fed a country variable with all the correct information
+     * except for the name being null
+     */
     @Test
     void displayCountryNameNull()
     {
@@ -50,12 +66,20 @@ public class UnitTests
     }
 
 
+    /**
+     * Testing if the display City method does not produce an error
+     * when given a null element
+     */
     @Test
     void displayCityNull()
     {
         app.displayCity(null);
     }
 
+    /**
+     * Testing if the display City method produces no output
+     * when given an empty city variable
+     */
     @Test
     void displayCityEmpty()
     {
@@ -63,6 +87,11 @@ public class UnitTests
         app.displayCity(area);
     }
 
+    /**
+     * Testing if the display City method outputs the correct
+     * information when provided a city method with all the correct
+     * information
+     */
     @Test
     void displayCity()
     {
@@ -72,6 +101,12 @@ public class UnitTests
         app.displayCity(area);
     }
 
+    /**
+     * Testing if the display City method outputs the correct
+     * information when provided a city variable with all
+     * the correct information except for the name field being
+     * null
+     */
     @Test
     void displayCityNameNull()
     {
@@ -81,12 +116,21 @@ public class UnitTests
         app.displayCity(area);
     }
 
+    /**
+     * Testing if the display District method does not produce
+     * any areas when given null in both parameter fields
+     */
     @Test
     void displayDistrictPopNull()
     {
         app.displayDistrictPop(null, null);
     }
 
+    /**
+     * Testing if the display District method outputs nothing
+     * given a city array list that is empty and the name parameter
+     * being null
+     */
     @Test
     void displayDistrictPopEmptyNameNull()
     {
@@ -94,6 +138,10 @@ public class UnitTests
         app.displayDistrictPop(cities, null);
     }
 
+    /**
+     * Testing if the display District method is able to output the name only,
+     * when given an empty city array list and an example name field
+     */
     @Test
     void displayDistrictPopEmpty()
     {
@@ -101,6 +149,11 @@ public class UnitTests
         app.displayDistrictPop(cities, "Test");
     }
 
+    /**
+     * Testing if display District method only outputs the name field when
+     * given a city array list with an empty city in the array and an example
+     * name field
+     */
     @Test
     void displayDistrictPopEmptyCityEmpty()
     {
@@ -110,6 +163,10 @@ public class UnitTests
         app.displayDistrictPop(cities, "Test");
     }
 
+    /**
+     * Testing Display District method produces the correct result
+     * when given complete field parameters
+     */
     @Test
     void displayDistrictPop()
     {
@@ -121,6 +178,12 @@ public class UnitTests
         app.displayDistrictPop(cities, "Test");
     }
 
+    /**
+     * Testing display District method produces the
+     * correct result when the city array list has a
+     * city element with a null name field and the method name field is given
+     * an example field
+     */
     @Test
     void displayDistrictPopNameNull()
     {
@@ -132,18 +195,34 @@ public class UnitTests
         app.displayDistrictPop(cities, "Test");
     }
 
+    /**
+     * Testing display world population by country method
+     * produces the correct result with a
+     * null field parameter
+     */
     @Test
     void displayWorldPopByCountryNull()
     {
         app.displayWorldPopByCountry(null);
     }
 
+    /**
+     * Testing display world population by country method produces the
+     * correct result given
+     * an empty countries array list
+     */
     @Test
     void displayWorldPopEmpty()
     {
         ArrayList<country> countries = new ArrayList<country>();
         app.displayWorldPopByCountry(countries);
     }
+
+    /**
+     * Testing display world population by country method produces the
+     * correct result given the parameter is
+     * a country array list with a empty country element
+     */
     @Test
     void displayWorldPopCountryEmpty()
     {
@@ -153,6 +232,10 @@ public class UnitTests
         app.displayWorldPopByCountry(countries);
     }
 
+    /**
+     * Testing if display world population by country method produces
+     * the correct output given the correct field parameter
+     */
     @Test
     void displayWorldPopByCountry()
     {
@@ -164,6 +247,11 @@ public class UnitTests
         app.displayWorldPopByCountry(countries);
     }
 
+    /**
+     * Testing if display world population by country produces
+     * the correct result when given partially fill field
+     * parameter
+     */
     @Test
     void displayWorldPopByCountryNameNull()
     {
@@ -176,6 +264,11 @@ public class UnitTests
     }
 
 
+    /**
+     * Testing display N cities in world method produces the correct result
+     * given a null parameter for the city array list field and a 0 for the limit
+     * field
+     */
     @Test
     void displayDisplayNCitiesInWorldNull()
     {
