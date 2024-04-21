@@ -6,6 +6,8 @@ Group 11's Semester Project
 
 [![Releases](https://img.shields.io/github/release/group11sem/set08103/all.svg?style=flat-square)](https://github.com/group11sem/set08103/releases)
 
+[![codecov](https://codecov.io/gh/group11sem/set08103/graph/badge.svg?token=FFI3VKAMIR)](https://codecov.io/gh/group11sem/set08103)
+
 # Software Engineering Methods
 Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/group11sem/set08103/main.yml?branch=develop)
 
