@@ -29,14 +29,6 @@ Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github
 | 7           | Be kind and respectful to one another|
 | 8           | Bring up issues you have at the team meetings to ensure constructive feedbackS|
 
-# Reports to Complete for Checkpoint 3
-| Name                | Issues completing                 |
-|---------------------|-----------------------------------|
-| Patrick Mountcastle | #2, #3, #11, #17, #18, #19 , #20  |
-| Fergus Reid         | #8, #9, #13,#14, #15, #16, #10    |
-| Jao Tome            | #23, #24, #25, #26, #27, #28, #22 |      
-| Whoever can do      | #21, #32, #33                     | 
-
 # Requirements Met Section
 
 | ID | Name                                                                                                  | Met | Screenshot                         | 
@@ -60,7 +52,7 @@ Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github
 | 17 | All the capital cities in the world organised by largest population to smallest.                      | YES | ![ScreenShot](/screenshots/17.png) | 
 | 18 | All the capital cities in a continent organised by largest population to smallest.                    | YES | ![ScreenShot](/screenshots/18.png) |
 | 19 | All the capital cities in a region organised by largest to smallest.                                  | YES | ![ScreenShot](/screenshots/19.png) |
-| 20 | The top N populated capital cities in the world where N is provided by the user.                      | YES | ![ScreenShot](/screenshots/2.png)  | 
+| 20 | The top N populated capital cities in the world where N is provided by the user.                      | YES | ![ScreenShot](/screenshots/20.png) | 
 | 21 | The top N populated capital cities in a continent where N is provided by the user.                    | YES | ![ScreenShot](/screenshots/21.png) |
 | 22 | The top N populated capital cities in a region where N is provided by the user.                       | YES | ![ScreenShot](/screenshots/22.png) |
 | 23 | The population of people, people living in cities, and people not living in cities in each continent. | YES | ![ScreenShot](/screenshots/23.png) | 
