@@ -161,7 +161,8 @@ public class Main
         a.displayCity(place);
 
         //Language report
-        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC"));
+        a.printSQL(a.executeSQL("SELECT l.language, l.Population, CONCAT((l.population/SUM(cc.population)*100), '%') AS '% of World' FROM (SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC) AS l JOIN country AS cc GROUP BY l.language ORDER BY Population DESC"));
+
 
 
         a.disconnect();
