@@ -20,7 +20,7 @@ public class Main
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
-
+        /**
         //Issue #1
         System.out.println("\n All countries pop in the world");
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
@@ -30,6 +30,8 @@ public class Main
         //Issue #2
         System.out.println("\n Displaying North American Countries:");
         a.displayCountries(a.getCountriesInContinent("North America"));
+
+
         //Issue #3
         System.out.println("\n Displaying Eastern Asia Countries:");
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
@@ -40,8 +42,10 @@ public class Main
         //#4
         a.displayCountries(a.getCountries("", "LIMIT 3 "));
 
+
         //#5
         a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 3 "));
+
 
         //#6
         a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
@@ -50,26 +54,29 @@ public class Main
         a.displayCities(a.getCities("", ""));
 
         //#8
-        a.displayCities(a.getCities("WHERE continent='Europe'", ""));
+        a.displayCities(a.getCities("WHERE country.continent='Europe' ", ""));
 
         //#9
-        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "", "INNER JOIN country ON city.countrycode = country.code "));
+
 
         //#10
-        a.displayCities(a.getCities("WHERE country.code='GBR' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
+        a.displayCities(a.getCities("WHERE country.code='GBR' ", "", "INNER JOIN country ON city.countrycode = country.code "));
 
         //Issue #11
         System.out.println("\n Displaying Scotland Cities:");
-        a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
+        a.displayCities(a.getALlCitiesPopInDistrict("Kabol"));
 
         //Issue #12
         System.out.println("\n N Cities Pop in the World");
         a.displayNCitiesInWorld(a.getALlCitiesPopInWorld(), 4);
 
 
-        int userInput = 99; //Default user input
-        String inputString = "Limit " + userInput + " ";
 
+        **/
+         int userInput = 99; //Default user input
+         String inputString = "Limit " + userInput + " ";
+/**
         //#13
 
         userInput = 3;
@@ -86,6 +93,8 @@ public class Main
         inputString = "Limit " + userInput + " ";
         a.displayCities(a.getCities("WHERE country.code='GBR' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
 
+
+
         //#16
         userInput = 6;
         inputString = "Limit " + userInput + " ";
@@ -100,6 +109,8 @@ public class Main
         //Issue #19
         System.out.println("\n Displaying Captial Cities in a region:");
         a.displayCities(a.getCapitalsInRegion("Western Europe"));
+
+
         //Issue #20
         System.out.println("\n Displaying Top N Captial Cities in the world:");
         a.displayNCitiesInWorld(a.getCapitalsInWorld(), 5);
@@ -112,6 +123,8 @@ public class Main
         //Issue #23
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Continent");
         a.displayRegionOfCitiesAndNonCities("Europe", a.getCountriesInContinent("Europe"), a.getCitiesInContinent("Europe"));
+
+
         //Issue #24
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Region");
         a.displayRegionOfCitiesAndNonCities("Eastern Asia", a.getCountriesInRegion("Eastern Asia"), a.getCitiesInRegion("Eastern Asia"));
@@ -119,6 +132,7 @@ public class Main
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a country");
         a.displayCountryOfCitiesAndNonCities(a.getCountryPop("United States"), a.getCities("WHERE country.code='USA' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
         //Issue #26
+        **/
         System.out.println("\n Displaying World Population:");
         a.displayWorldPop(a.getALlCountriesPopInWorld());
         //Issue #27
@@ -147,7 +161,7 @@ public class Main
         a.displayCity(place);
 
         //Language report
-        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Populatioon DESC"));
+        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC"));
 
 
         a.disconnect();
@@ -256,8 +270,11 @@ public class Main
         if (area != null)
         {
             System.out.println(
-                    "Name: " + area.name + "\n" +
-                            "Population: " + area.population);
+                    "Name: " + area.name + " | " +
+                            "Population: " + area.population + " | " +
+                    "Continent: " + area.continent + " | " + "Code: " + area.code +
+                    " | " + "Region: " + area.region + " | " + "Captial: " + area.capital
+            + "\n");
         }
     }
 
@@ -276,7 +293,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, countrycode, district "
                             + "FROM city "
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
@@ -288,6 +305,8 @@ public class Main
                 city area = new city();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 return area;
             }
             else
@@ -311,8 +330,10 @@ public class Main
         if (area != null)
         {
             System.out.println(
-                    "Name: " + area.name + "\n" +
-                            "Population: " + area.population);
+                    "Name: " + area.name + " | " +
+                            "Population: " + area.population + " | " +
+                    "District: " + area.district + " | " + "Country: " + area.countryCode
+            + "\n");
         }
     }
 
@@ -331,7 +352,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, district, countrycode"
                             + "FROM city "
                             + "WHERE district = '" + name + "'";
             // Execute SQL statement
@@ -344,6 +365,8 @@ public class Main
                 city area = new city();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 cities.add(area);
             }
             return cities;
@@ -390,7 +413,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, code, continent, region, capital  "
                             + "FROM country "
                             + "ORDER BY population DESC";
             // Execute SQL statement
@@ -403,6 +426,10 @@ public class Main
                 country area = new country();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.continent = rset.getString("continent");
+                area.capital = rset.getInt("capital");
+                area.region = rset.getString("region");
+                area.code = rset.getString("code");
                 countries.add(area);
             }
             return countries;
@@ -426,7 +453,12 @@ public class Main
         if (countries != null)
         {
             for(int i = 0; i < countries.size(); i++){
-                System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
+                System.out.println(
+                        "Name: " + countries.get(i).name + " | " +
+                                "Population: " + countries.get(i).population + " | " +
+                                "Continent: " + countries.get(i).continent + " | " + "Code: " + countries.get(i).code +
+                                " | " + "Region: " + countries.get(i).region + " | " + "Captial: " + countries.get(i).capital
+                                + "\n");
             }
 
         }
@@ -446,7 +478,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, district, countrycode "
                             + "FROM city "
                             + "ORDER BY population DESC";
             // Execute SQL statement
@@ -459,6 +491,8 @@ public class Main
                 city area = new city();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 cities.add(area);
             }
             return cities;
@@ -483,7 +517,11 @@ public class Main
         {
             if(cities.size() >= n) {
                 for (int i = 0; i < n; i++) {
-                    System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+                    System.out.println(
+                            "Name: " + cities.get(i).name + " | " +
+                                    "Population: " + cities.get(i).population + " | " +
+                                    "District: " + cities.get(i).district + " | " + "Country: " + cities.get(i).countryCode
+                                    + "\n");
                 }
             }
             else{
@@ -524,6 +562,7 @@ public class Main
                 c.region = rset.getString("region");
                 c.population = rset.getInt("population");
                 c.capital = rset.getInt("capital");
+                c.continent = rset.getString("continent");
                 countries.add(c);
             }
             return countries;
@@ -545,7 +584,8 @@ public class Main
         {
             if(country == null) {System.out.println("country is null"); return;}
 
-            System.out.println("Name: " + country.name + " Population: " + country.population);
+            System.out.println("Name: " + country.name + " Population: " + country.population + " Continent: " + country.continent
+            + " Region: " + country.region + " Code: " + country.code + " Capital: " + country.capital);
         }
     }
 
@@ -559,7 +599,7 @@ public class Main
         {
             if(city == null) {System.out.println("country is null"); return;}
 
-            System.out.println("Name: " + city.name + " Population: " + city.population);
+            System.out.println("Name: " + city.name + " Population: " + city.population + " District: " + city.district + " Country: " + city.countryCode);
         }
     }
 
@@ -578,7 +618,7 @@ public class Main
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, code, continent, region, capital "
                             + "FROM country "
                             + "WHERE continent = '" + continent + "'"
                             + "ORDER BY population DESC";
@@ -592,6 +632,10 @@ public class Main
                 country area = new country();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.continent = rset.getString("continent");
+                area.capital = rset.getInt("capital");
+                area.region = rset.getString("region");
+                area.code = rset.getString("code");
                 countries.add(area);
             }
             return countries;
@@ -618,7 +662,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, code, continent, region, capital "
                             + "FROM country "
                             + "WHERE region = '" + region + "'"
                             + "ORDER BY population DESC";
@@ -631,6 +675,10 @@ public class Main
                 country area = new country();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.continent = rset.getString("continent");
+                area.capital = rset.getInt("capital");
+                area.region = rset.getString("region");
+                area.code = rset.getString("code");
                 countries.add(area);
             }
             return countries;
@@ -657,7 +705,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.population, city.district, city.countrycode "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital "
                             + "ORDER BY population DESC ";
@@ -673,6 +721,8 @@ public class Main
                 city c = new city();
                 c.name = rset.getString("city.name");
                 c.population = rset.getInt("city.population");
+                c.district = rset.getString("city.district");
+                c.countryCode = rset.getString("city.countrycode");
                 cities.add(c);
             }
             return cities;
@@ -700,7 +750,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.population, city.district, city.countrycode "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital " +
                             "AND country.continent = '" + continent + "' "
@@ -717,6 +767,8 @@ public class Main
                 city c = new city();
                 c.name = rset.getString("city.name");
                 c.population = rset.getInt("city.population");
+                c.district = rset.getString("city.district");
+                c.countryCode = rset.getString("city.countrycode");
                 cities.add(c);
             }
             return cities;
@@ -744,7 +796,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.population, city.district, city.countrycode "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital " +
                             "AND country.region = '" + region + "' "
@@ -761,6 +813,8 @@ public class Main
                 city c = new city();
                 c.name = rset.getString("city.name");
                 c.population = rset.getInt("city.population");
+                c.district = rset.getString("city.district");
+                c.countryCode = rset.getString("city.countrycode");
                 cities.add(c);
             }
             return cities;
@@ -929,14 +983,16 @@ public class Main
     {
         if (cities != null && area != null)
         {
-            int population = 0;
+            float population = 0;
             for(int i = 0; i < cities.size();i++){
                 population += cities.get(i).population;
             }
-            int not_cities = area.population - population;
+            float not_cities = area.population - population;
+            float not_cities_percentage = not_cities/area.population;
+            float in_cities_percentage = population/area.population;
             System.out.println("Country Name: " + area.name + "" + "Population: " + area.population
-            + "\n Population in Cities: " + population +
-                    "\n Population not in Cities: " + not_cities + "\n");
+            + "\n Population in Cities: " + population + "(" + in_cities_percentage + ")" +
+                    "\n Population not in Cities: " + not_cities + "(" + not_cities_percentage + ")"  + "\n");
         }
     }
 
@@ -955,18 +1011,20 @@ public class Main
     {
         if (cities != null && countries != null)
         {
-            int total_pop = 0;
+            float total_pop = 0;
             for(int i = 0; i < countries.size();i++){
                 total_pop += countries.get(i).population;
             }
-            int city_population = 0;
+            float city_population = 0;
             for(int j = 0; j < cities.size();j++){
                 city_population += cities.get(j).population;
             }
-            int not_cities = total_pop - city_population;
+            float not_cities = total_pop - city_population;
+            float not_cities_percentage = not_cities/total_pop;
+            float in_cities_percentage = city_population/total_pop;
             System.out.println("Country Name: " + name + " " + "Population: " + total_pop
-                    + "\n Population in Cities: " + city_population +
-                    "\n Population not in Cities: " + not_cities + "\n");
+                    + "\n Population in Cities: " + city_population + "(" + in_cities_percentage + ")" +
+                    "\n Population not in Cities: " + not_cities + "(" + not_cities_percentage + ")" + "\n");
         }
     }
 
@@ -985,7 +1043,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.population, city.district, city.countrycode "
                             + "FROM city, country "
                             + "WHERE country.region = '" + region + "' "
                             + "AND country.code = city.countrycode "
@@ -1002,6 +1060,8 @@ public class Main
                 city c = new city();
                 c.name = rset.getString("city.name");
                 c.population = rset.getInt("city.population");
+                c.district = rset.getString("city.district");
+                c.countryCode = rset.getString("city.countrycode");
                 cities.add(c);
             }
             return cities;
@@ -1029,7 +1089,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.population, city.district, city.countrycode "
                             + "FROM city, country "
                             + "WHERE country.continent = '" + continent + "' "
                             + "AND country.code = city.countrycode "
@@ -1046,6 +1106,8 @@ public class Main
                 city c = new city();
                 c.name = rset.getString("city.name");
                 c.population = rset.getInt("city.population");
+                c.district = rset.getString("city.district");
+                c.countryCode = rset.getString("city.countrycode");
                 cities.add(c);
             }
             return cities;
