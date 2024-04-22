@@ -17,6 +17,8 @@ public class Main
         }else{
             a.connect(args[0], Integer.parseInt(args[1]));
         }
+
+
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
@@ -25,11 +27,12 @@ public class Main
         System.out.println("\n All countries pop in the world");
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
-        a.displayWorldPopByCountry(countries);
+        //a.displayWorldPopByCountry(countries);
 
         //Issue #2
         System.out.println("\n Displaying North American Countries:");
         a.displayCountries(a.getCountriesInContinent("North America"));
+        /*
         //Issue #3
         System.out.println("\n Displaying Eastern Asia Countries:");
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
@@ -47,10 +50,10 @@ public class Main
         a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
 
         //#7
-        a.displayCities(a.getCities("", ""));
+        a.displayCities(a.getCities());
 
         //#8
-        a.displayCities(a.getCities("WHERE continent='Europe'", ""));
+        a.displayCities(a.getCities("WHERE country.continent='Europe'", "", "INNER JOIN country ON city.countrycode = country.code "));
 
         //#9
         a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
@@ -116,17 +119,20 @@ public class Main
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a Region");
         a.displayRegionOfCitiesAndNonCities("Eastern Asia", a.getCountriesInRegion("Eastern Asia"), a.getCitiesInRegion("Eastern Asia"));
         //Issue #25
+
+
+
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a country");
         a.displayCountryOfCitiesAndNonCities(a.getCountryPop("United States"), a.getCities("WHERE country.code='USA' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
         //Issue #26
         System.out.println("\n Displaying World Population:");
-        a.displayWorldPop(a.getALlCountriesPopInWorld());
+        a.displayWorldPop(a.getALlCountriesPopInWorld(), a.getALlCitiesPopInWorld());
         //Issue #27
         System.out.println("\n Displaying the total population of a Continent");
         a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe");
         //Issue #28
         System.out.println("\n Displaying the population in all of Eastern Asia:");
-        a.displayRegionPop(a.getCountriesInRegion("Eastern Asia"), "Eastern Asia");
+        a.displayRegionPop(a.getCountriesInRegion("Eastern Asia"), "Eastern Asia", a.getCitiesInRegion("Eastern Asia"));
 
 
         //Issue #29
@@ -147,8 +153,10 @@ public class Main
         a.displayCity(place);
 
         //Language report
-        a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Populatioon DESC"));
+        a.printSQL(a.executeSQL("SELECT l.language, l.Population, CONCAT((l.population/SUM(cc.population)*100), '%') AS '% of World' FROM (SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC) AS l JOIN country AS cc GROUP BY l.language ORDER BY Population DESC"));
 
+
+         */
 
         a.disconnect();
     }
@@ -217,7 +225,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM country "
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
@@ -227,8 +235,12 @@ public class Main
             if (rset.next())
             {
                 country area = new country();
+                area.code = rset.getString("code");
                 area.name = rset.getString("name");
+                area.continent = rset.getString("continent");
+                area.region = rset.getString("region");
                 area.population = rset.getInt("population");
+                area.capital = rset.getInt("capital");
                 return area;
             }
             else
@@ -251,9 +263,13 @@ public class Main
     {
         if (area != null)
         {
+            /*
             System.out.println(
                     "Name: " + area.name + "\n" +
                             "Population: " + area.population);
+
+             */
+            System.out.println(area.toString());
         }
     }
 
@@ -272,7 +288,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM city "
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
@@ -283,6 +299,8 @@ public class Main
             {
                 city area = new city();
                 area.name = rset.getString("name");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 area.population = rset.getInt("population");
                 return area;
             }
@@ -306,9 +324,14 @@ public class Main
     {
         if (area != null)
         {
+            /*
             System.out.println(
                     "Name: " + area.name + "\n" +
                             "Population: " + area.population);
+
+             */
+            System.out.println(area.toString());
+
         }
     }
 
@@ -327,7 +350,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM city "
                             + "WHERE district = '" + name + "'";
             // Execute SQL statement
@@ -339,6 +362,8 @@ public class Main
             {
                 city area = new city();
                 area.name = rset.getString("name");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 area.population = rset.getInt("population");
                 cities.add(area);
             }
@@ -386,7 +411,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM country "
                             + "ORDER BY population DESC";
             // Execute SQL statement
@@ -397,8 +422,12 @@ public class Main
             while (rset.next())
             {
                 country area = new country();
+                area.code = rset.getString("code");
                 area.name = rset.getString("name");
+                area.continent = rset.getString("continent");
+                area.region = rset.getString("region");
                 area.population = rset.getInt("population");
+                area.capital = rset.getInt("capital");
                 countries.add(area);
             }
             return countries;
@@ -422,7 +451,8 @@ public class Main
         if (countries != null)
         {
             for(int i = 0; i < countries.size(); i++){
-                System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
+                //System.out.println("Country Name: " + countries.get(i).name + " Population: " + countries.get(i).population);
+                System.out.println(countries.get(i).toString());
             }
 
         }
@@ -442,7 +472,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM city "
                             + "ORDER BY population DESC";
             // Execute SQL statement
@@ -454,6 +484,8 @@ public class Main
             {
                 city area = new city();
                 area.name = rset.getString("name");
+                area.countryCode = rset.getString("countrycode");
+                area.district = rset.getString("district");
                 area.population = rset.getInt("population");
                 cities.add(area);
             }
@@ -479,7 +511,8 @@ public class Main
         {
             if(cities.size() >= n) {
                 for (int i = 0; i < n; i++) {
-                    System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+                    //System.out.println("City Name: " + cities.get(i).name + " Population: " + cities.get(i).population);
+                    System.out.println(cities.get(i).toString());
                 }
             }
             else{
@@ -517,6 +550,7 @@ public class Main
                 country c = new country();
                 c.code = rset.getString("code");
                 c.name = rset.getString("name");
+                c.continent = rset.getString("continent");
                 c.region = rset.getString("region");
                 c.population = rset.getInt("population");
                 c.capital = rset.getInt("capital");
@@ -541,7 +575,7 @@ public class Main
         {
             if(country == null) {System.out.println("country is null"); return;}
 
-            System.out.println("Name: " + country.name + " Population: " + country.population);
+            System.out.println(country.toString());
         }
     }
 
@@ -555,7 +589,7 @@ public class Main
         {
             if(city == null) {System.out.println("country is null"); return;}
 
-            System.out.println("Name: " + city.name + " Population: " + city.population);
+            System.out.println(city.toString());
         }
     }
 
@@ -574,7 +608,7 @@ public class Main
 
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM country "
                             + "WHERE continent = '" + continent + "'"
                             + "ORDER BY population DESC";
@@ -586,8 +620,12 @@ public class Main
             while (rset.next())
             {
                 country area = new country();
+                area.code = rset.getString("code");
                 area.name = rset.getString("name");
+                area.continent = rset.getString("continent");
+                area.region = rset.getString("region");
                 area.population = rset.getInt("population");
+                area.capital = rset.getInt("capital");
                 countries.add(area);
             }
             return countries;
@@ -614,7 +652,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT * "
                             + "FROM country "
                             + "WHERE region = '" + region + "'"
                             + "ORDER BY population DESC";
@@ -625,8 +663,12 @@ public class Main
             while (rset.next())
             {
                 country area = new country();
+                area.code = rset.getString("code");
                 area.name = rset.getString("name");
+                area.continent = rset.getString("continent");
+                area.region = rset.getString("region");
                 area.population = rset.getInt("population");
+                area.capital = rset.getInt("capital");
                 countries.add(area);
             }
             return countries;
@@ -653,7 +695,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.countrycode, city.population, city.district "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital "
                             + "ORDER BY population DESC ";
@@ -667,8 +709,10 @@ public class Main
             while (rset.next())
             {
                 city c = new city();
-                c.name = rset.getString("city.name");
-                c.population = rset.getInt("city.population");
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
                 cities.add(c);
             }
             return cities;
@@ -696,7 +740,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.countrycode, city.population, city.district "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital " +
                             "AND country.continent = '" + continent + "' "
@@ -711,8 +755,10 @@ public class Main
             while (rset.next())
             {
                 city c = new city();
-                c.name = rset.getString("city.name");
-                c.population = rset.getInt("city.population");
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
                 cities.add(c);
             }
             return cities;
@@ -740,7 +786,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.countrycode, city.population, city.district "
                             + "FROM city, country "
                             + "WHERE city.id = country.capital " +
                             "AND country.region = '" + region + "' "
@@ -755,8 +801,10 @@ public class Main
             while (rset.next())
             {
                 city c = new city();
-                c.name = rset.getString("city.name");
-                c.population = rset.getInt("city.population");
+                c.name = rset.getString("name");
+                c.countryCode = rset.getString("countrycode");
+                c.district = rset.getString("district");
+                c.population = rset.getInt("population");
                 cities.add(c);
             }
             return cities;
@@ -769,21 +817,51 @@ public class Main
         }
     }
 
+    /**
+     * A function that prepares a SQL query to be used with the executeSQL and parseCity functions
+     * <p>This function takes three strings and combines them together to make a SQL query and returns an ArrayList of city objects</p>
+     * @return An ArrayList of city objects
+     * @author Fergus
+     */
     public ArrayList<city> getCities()
     {
         return getCities("");
     }
 
+    /**
+     * A function that prepares a SQL query to be used with the executeSQL and parseCity functions
+     * <p>This function takes three strings and combines them together to make a SQL query and returns an ArrayList of city objects</p>
+     * @param whereStatement A string that should contain "WHERE x = y" where x and why are two values you want to compare the = can be swapped out for any other valid SQL caparison
+     * @return An ArrayList of city objects
+     * @author Fergus
+     */
     public ArrayList<city> getCities(String whereStatement)
     {
         return getCities(whereStatement, "");
     }
 
+    /**
+     * A function that prepares a SQL query to be used with the executeSQL and parseCity functions
+     * <p>This function takes three strings and combines them together to make a SQL query and returns an ArrayList of city objects</p>
+     * @param whereStatement A string that should contain "WHERE x = y" where x and why are two values you want to compare the = can be swapped out for any other valid SQL caparison
+     * @param limitStatement A string that should contain "LIMIT x" where x is any integer greater than 0
+     * @return An ArrayList of city objects
+     * @author Fergus
+     */
     public ArrayList<city> getCities(String whereStatement, String limitStatement)
     {
         return getCities(whereStatement, limitStatement, "");
     }
 
+    /**
+     * A function that prepares a SQL query to be used with the executeSQL and parseCity functions
+     * <p>This function takes three strings and combines them together to make a SQL query and returns an ArrayList of city objects</p>
+     * @param whereStatement A string that should contain "WHERE x = y" where x and why are two values you want to compare the = can be swapped out for any other valid SQL caparison
+     * @param limitStatement A string that should contain "LIMIT x" where x is any integer greater than 0
+     * @param joinStatement A string that should contain a valid join statement
+     * @return An ArrayList of city objects
+     * @author Fergus
+     */
     public ArrayList<city> getCities(String whereStatement, String limitStatement, String joinStatement)
     {
         if(whereStatement == null || limitStatement == null || joinStatement == null){System.out.println("Part of your statement is null, use an empty string instead [getCities]"); return null;}
@@ -800,6 +878,12 @@ public class Main
         return parseCity(rset);
     }
 
+    /**
+     * A function that assigns values from a ResultSet to a city object
+     * <p>Made to work with executeSQL as an easy way of retrieving values from the ResultSet and SQL table</p>
+     * @param rset ResultSet from the ResultSet.executeQuery(statement)
+     * @return Returns a city object with each value filled in from a row from an SQL table
+     */
     public ArrayList<city> parseCity (ResultSet rset)
     {
         try {
@@ -823,6 +907,12 @@ public class Main
     }
 
 
+    /**
+     * A function made to execute any valid SQL query and return the results
+     * @param statement A valid SQL statement that can be used with ResultSet.executeQuery(statement)
+     * @return Returns a ResultSet from the ResultSet.executeQuery(statement)
+     * @author Fergus
+     */
     public ResultSet executeSQL(String statement)
     {
         if(statement == null){System.out.println("Part of your statement is null [executeSQl]"); return null;}
@@ -847,6 +937,13 @@ public class Main
         }
     }
 
+    /**
+     * A function made to print the table contained within a ResultSet in a simple and readable manner.
+     * <p>Prints out the name of each column with a tab between each value tot the terminal. The Rows are printed the same way.
+     * There is a "---" after the results to separate this result from any further terminal output</p>
+     * @param rset A ResultSet from an SQL table query
+     * @author Fergus
+     */
     public void printSQL(ResultSet rset)
     {
         try {
@@ -882,15 +979,17 @@ public class Main
      * Functions: adds up the populations of all the countries in the world
      * and displays it.
      */
-    public void displayWorldPop(ArrayList<country> countries)
+    public void displayWorldPop(ArrayList<country> countries, ArrayList<city> cities)
     {
         if (countries != null)
         {
             int population = 0;
+            int citiesPopulation = 0;
             for(int i = 0; i < countries.size();i++){
                 population += countries.get(i).population;
+                citiesPopulation += cities.get(i).population;
             }
-            System.out.println("World Population: " + population);
+            System.out.println("World Population: " + population + "    Urban Population: " + citiesPopulation + "Rural Population: " + (population-citiesPopulation) + "  Urban/Rural: " + citiesPopulation/population + "%");
         }
     }
 
@@ -901,15 +1000,17 @@ public class Main
      * Description: Adds up all the populations of countries in the region and
      * displays the population of the region and its name.
      */
-    public void displayRegionPop(ArrayList<country> countries, String name)
+    public void displayRegionPop(ArrayList<country> countries, String name, ArrayList<city> cities)
     {
         if (countries != null)
         {
             int population = 0;
+            int citiesPopulation = 0;
             for(int i = 0; i < countries.size();i++){
                 population += countries.get(i).population;
+                citiesPopulation += cities.get(i).population;
             }
-            System.out.println("Region Name: " + name + "\n" + "Population: " + population);
+            System.out.println("Region Population: " + population + "    Urban Population: " + citiesPopulation + "Rural Population: " + (population-citiesPopulation) + "  Urban/Rural: " + citiesPopulation/population + "%");
         }
     }
 
@@ -930,9 +1031,9 @@ public class Main
                 population += cities.get(i).population;
             }
             int not_cities = area.population - population;
-            System.out.println("Country Name: " + area.name + "" + "Population: " + area.population
+            System.out.println("Country Name: " + area.name + "Population: " + area.population
             + "\n Population in Cities: " + population +
-                    "\n Population not in Cities: " + not_cities + "\n");
+                    "\n Population not in Cities: " + not_cities + "  Urban/Rural: " + population/area.population + "%\n");
         }
     }
 
