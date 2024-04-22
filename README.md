@@ -64,4 +64,4 @@ Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github
 | 29 | The population of a country                                                                          | Yes | ![img_26.png](img_26.png) |
 | 30 | The population of a district                                                                         | Yes | ![img_31.png](img_31.png)                          | 
 | 31 | The population of a city                                                                             | Yes | ![img_27.png](img_27.png) |
-| 32 | Language report                                                                                      | Yes | ![img_32.png]![ScreenShot](/screenshots/32.PNG) |
+| 32 | Language report                                                                                      | Yes | ![img_32.PNG]![ScreenShot](/screenshots/32.PNG) |
