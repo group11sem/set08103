@@ -20,7 +20,7 @@ public class Main
         System.out.println("Displaying a Country's Population: ");
 
         //Commeneted Out to perform more testing with less clutter.
-        /**
+
         //Issue #1
         System.out.println("\n All countries pop in the world");
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
@@ -73,10 +73,10 @@ public class Main
 
 
 
-        **/
+
          int userInput = 99; //Default user input
          String inputString = "Limit " + userInput + " ";
-/**
+
         //#13
 
         userInput = 3;
@@ -148,13 +148,13 @@ public class Main
         country area = a.getCountryPop("United States");
         //Displays the information of given country
         a.displayCountry(area);
-        **/
+
         //Issue #30
         //Displaying all cities in a district and their population
         ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
         System.out.println("Displaying a district's Population: ");
         a.displayDistrictPop(cities, "Scotland");
-        /**
+
         //Issue #31
         System.out.println("Displaying a city's Population: ");
         city place = a.getCityPop("Edinburgh");
@@ -162,7 +162,7 @@ public class Main
 
         //Language report
         a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC"));
-        **/
+
 
         a.disconnect();
     }
