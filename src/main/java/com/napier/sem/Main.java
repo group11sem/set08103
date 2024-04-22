@@ -18,21 +18,23 @@ public class Main
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-
+/*
         System.out.println("Displaying a Country's Population: ");
 
-        //Commeneted Out to perform more testing with less clutter.
+
 
         //Issue #1
         System.out.println("\n All countries pop in the world");
         ArrayList<country> countries = a.getALlCountriesPopInWorld();
 
-        //a.displayWorldPopByCountry(countries);
+        a.displayWorldPopByCountry(countries);
 
         //Issue #2
         System.out.println("\n Displaying North American Countries:");
         a.displayCountries(a.getCountriesInContinent("North America"));
-        /*
+
+
+
         //Issue #3
         System.out.println("\n Displaying Eastern Asia Countries:");
         a.displayCountries(a.getCountriesInRegion("Eastern Asia"));
@@ -41,13 +43,16 @@ public class Main
         //FERGUS WORK, ISSUES #4 TO #10
 
         //#4
-        a.displayCountries(a.getCountries("", "LIMIT 3 "));
+        a.displayCountries(a.getCountries("", "LIMIT 5 "));
+
 
         //#5
-        a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 3 "));
+        a.displayCountries(a.getCountries("WHERE Continent='Europe' ", "LIMIT 5 "));
 
         //#6
-        a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 3 "));
+        a.displayCountries(a.getCountries("WHERE Region='Western Europe' ", "LIMIT 5 "));
+
+
 
         //#7
         a.displayCities(a.getCities());
@@ -56,11 +61,11 @@ public class Main
         a.displayCities(a.getCities("WHERE country.continent='Europe'", "", "INNER JOIN country ON city.countrycode = country.code "));
 
         //#9
-        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
-
+        a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "", "INNER JOIN country ON city.countrycode = country.code "));
+*/
         //#10
-        a.displayCities(a.getCities("WHERE country.code='GBR' ", "LIMIT 3 ", "INNER JOIN country ON city.countrycode = country.code "));
-
+        a.displayCities(a.getCities("WHERE country.code='GBR' ", "", "INNER JOIN country ON city.countrycode = country.code "));
+/*
         //Issue #11
         System.out.println("\n Displaying Scotland Cities:");
         a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));

@@ -11,12 +11,12 @@ Group 11's Semester Project
 # Software Engineering Methods
 Develop Branch: ![GitHub Workflow Status (branch)](https://img.shields.io/github/actions/workflow/status/group11sem/set08103/main.yml?branch=develop)
 
-| Name                   | Matriculation No. | Review 1 | Review 2 | Review 3 |
-|------------------------|-------------------|---|----------|----------|
-| Patric Mountcastle     | 40689401          | 34% | 33.4%    | 50%     |
-| Fergus Reid            | 40534638          | 33% | 33.3%    | 50%      |
-| Joao Tome              | 40658588          | 33% | 33.3%    | 0%       |
- | Maja Kolodziej        | ---------         | N/A | N/A      | 0%       |
+| Name               | Matriculation No. | Review 1 | Review 2 | Review 3 | Submission | 
+|--------------------|-------------------|----------|----------|----------|------------|
+| Patric Mountcastle | 40689401          | 34%      | 33.4%    | 50%      |            |
+| Fergus Reid        | 40534638          | 33%      | 33.3%    | 50%      |            |
+| Joao Tome          | 40658588          | 33%      | 33.3%    | 0%       |            |
+| Maja Kolodziej     | ---------         | N/A      | N/A      | 0%       |            |
 
 | Rule Number | Code of Conduct|
 |-------------|---|
