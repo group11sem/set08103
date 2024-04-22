@@ -217,7 +217,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population "
+                    "SELECT name, population, code, continent, region, capital "
                             + "FROM country "
                             + "WHERE name = '" + name + "'";
             // Execute SQL statement
@@ -229,6 +229,10 @@ public class Main
                 country area = new country();
                 area.name = rset.getString("name");
                 area.population = rset.getInt("population");
+                area.continent = rset.getString("continent");
+                area.capital = rset.getInt("capital");
+                area.region = rset.getString("region");
+                area.code = rset.getString("code");
                 return area;
             }
             else
