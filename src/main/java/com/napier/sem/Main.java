@@ -91,7 +91,7 @@ public class Main
         userInput = 5;
         inputString = "Limit " + userInput + " ";
         a.displayCities(a.getCities("WHERE country.region='Western Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
-/*
+
         //#15
         userInput = 5;
         inputString = "Limit " + userInput + " ";
@@ -137,7 +137,7 @@ public class Main
         a.displayWorldPop(a.getALlCountriesPopInWorld(), a.getALlCitiesPopInWorld());
         //Issue #27
         System.out.println("\n Displaying the total population of a Continent");
-        a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe");
+        a.displayContinentPop(a.getCountriesInContinent("Europe"), "Europe", a.getCitiesInContinent("Europe"));
         //Issue #28
         System.out.println("\n Displaying the population in all of Eastern Asia:");
         a.displayRegionPop(a.getCountriesInRegion("Eastern Asia"), "Eastern Asia", a.getCitiesInRegion("Eastern Asia"));
@@ -164,7 +164,7 @@ public class Main
         a.printSQL(a.executeSQL("SELECT l.language, l.Population, CONCAT((l.population/SUM(cc.population)*100), '%') AS '% of World' FROM (SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC) AS l JOIN country AS cc GROUP BY l.language ORDER BY Population DESC"));
 
 
-         */
+
 
         a.disconnect();
     }
@@ -995,6 +995,8 @@ public class Main
             int citiesPopulation = 0;
             for(int i = 0; i < countries.size();i++){
                 population += countries.get(i).population;
+            }
+            for(int i = 0; i < cities.size();i++){
                 citiesPopulation += cities.get(i).population;
             }
             System.out.println("World Population: " + population + "    Urban Population: " + citiesPopulation + "Rural Population: " + (population-citiesPopulation) + "  Urban/Rural: " + citiesPopulation/population + "%");
@@ -1016,6 +1018,8 @@ public class Main
             int citiesPopulation = 0;
             for(int i = 0; i < countries.size();i++){
                 population += countries.get(i).population;
+            }
+            for(int i = 0; i < cities.size();i++){
                 citiesPopulation += cities.get(i).population;
             }
             System.out.println("Region Population: " + population + "    Urban Population: " + citiesPopulation + "Rural Population: " + (population-citiesPopulation) + "  Urban/Rural: " + citiesPopulation/population + "%");
@@ -1090,7 +1094,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.countrycode, city.population, city.district "
                             + "FROM city, country "
                             + "WHERE country.region = '" + region + "' "
                             + "AND country.code = city.countrycode "
@@ -1134,7 +1138,7 @@ public class Main
             // Create string for SQL statement
 
             String strSelect =
-                    "SELECT city.name, city.population "
+                    "SELECT city.name, city.countrycode, city.population, city.district "
                             + "FROM city, country "
                             + "WHERE country.continent = '" + continent + "' "
                             + "AND country.code = city.countrycode "
@@ -1170,15 +1174,19 @@ public class Main
      * Description: Adds up the population of all countries in a continent and displays
      * the total population and the name of that continent.
      */
-    public void displayContinentPop(ArrayList<country> countries, String name)
+    public void displayContinentPop(ArrayList<country> countries, String name, ArrayList<city> cities)
     {
         if (countries != null)
         {
             int population = 0;
+            int citiesPopulation = 0;
             for(int i = 0; i < countries.size();i++){
                 population += countries.get(i).population;
             }
-            System.out.println("Continent Name: " + name + "\n" + "Population: " + population);
+            for(int i = 0; i < cities.size();i++){
+                citiesPopulation += cities.get(i).population;
+            }
+            System.out.println("Continent Population: " + population + "    Urban Population: " + citiesPopulation + "Rural Population: " + (population-citiesPopulation) + "  Urban/Rural: " + citiesPopulation/population + "%");
         }
     }
 }
