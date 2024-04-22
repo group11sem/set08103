@@ -54,7 +54,7 @@ public class Main
         a.displayCities(a.getCities("", ""));
 
         //#8
-        a.displayCities(a.getCities("WHERE country.continent='Europe' ", ""));
+        a.displayCities(a.getCitiesInContinent("Europe"));
 
         //#9
         a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "", "INNER JOIN country ON city.countrycode = country.code "));
@@ -65,7 +65,7 @@ public class Main
 
         //Issue #11
         System.out.println("\n Displaying Scotland Cities:");
-        a.displayCities(a.getALlCitiesPopInDistrict("Kabol"));
+        a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
 
         //Issue #12
         System.out.println("\n N Cities Pop in the World");
@@ -132,7 +132,7 @@ public class Main
         System.out.println("\n Displaying the total population, population in cities, and population outside of cities of a country");
         a.displayCountryOfCitiesAndNonCities(a.getCountryPop("United States"), a.getCities("WHERE country.code='USA' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
         //Issue #26
-        **/
+
         System.out.println("\n Displaying World Population:");
         a.displayWorldPop(a.getALlCountriesPopInWorld());
         //Issue #27
@@ -148,13 +148,13 @@ public class Main
         country area = a.getCountryPop("United States");
         //Displays the information of given country
         a.displayCountry(area);
-
+        **/
         //Issue #30
         //Displaying all cities in a district and their population
         ArrayList<city> cities = a.getALlCitiesPopInDistrict("Scotland");
         System.out.println("Displaying a district's Population: ");
         a.displayDistrictPop(cities, "Scotland");
-
+        /**
         //Issue #31
         System.out.println("Displaying a city's Population: ");
         city place = a.getCityPop("Edinburgh");
@@ -162,7 +162,7 @@ public class Main
 
         //Language report
         a.printSQL(a.executeSQL("SELECT cl.language, ROUND((SUM(c.population*cl.percentage/100)), 0) AS 'Population' FROM countrylanguage AS cl JOIN country AS c ON cl.countrycode = c.code WHERE cl.language IN ('Chinese','English','Hindi','Spanish','Arabic') GROUP BY cl.language ORDER BY Population DESC"));
-
+        **/
 
         a.disconnect();
     }
@@ -352,7 +352,7 @@ public class Main
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect =
-                    "SELECT name, population, district, countrycode"
+                    "SELECT name, population, district, countrycode "
                             + "FROM city "
                             + "WHERE district = '" + name + "'";
             // Execute SQL statement
