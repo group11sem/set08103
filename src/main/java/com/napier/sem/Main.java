@@ -62,28 +62,30 @@ public class Main
 
         //#9
         a.displayCities(a.getCities("WHERE country.region='Western Europe' ", "", "INNER JOIN country ON city.countrycode = country.code "));
-*/
+
         //#10
         a.displayCities(a.getCities("WHERE country.code='GBR' ", "", "INNER JOIN country ON city.countrycode = country.code "));
-/*
+
         //Issue #11
         System.out.println("\n Displaying Scotland Cities:");
         a.displayCities(a.getALlCitiesPopInDistrict("Scotland"));
 
+
+
         //Issue #12
         System.out.println("\n N Cities Pop in the World");
-        a.displayNCitiesInWorld(a.getALlCitiesPopInWorld(), 4);
+        a.displayNCitiesInWorld(a.getALlCitiesPopInWorld(), 5);
 
-
+*/
         int userInput = 99; //Default user input
         String inputString = "Limit " + userInput + " ";
 
         //#13
 
-        userInput = 3;
+        userInput = 5;
         inputString = "Limit " + userInput + " ";
         a.displayCities(a.getCities("WHERE country.continent='Europe' ", inputString, "INNER JOIN country ON city.countrycode = country.code "));
-
+/*
         //#14
         userInput = 4;
         inputString = "Limit " + userInput + " ";
